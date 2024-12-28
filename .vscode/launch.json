@@ -39,6 +39,22 @@
         "--target",
         "lib/main_production.dart"
       ]
-    }
+    },
+    {
+      "name": "Coverage",
+      "type": "dart",
+      "request": "launch",
+      "args": [
+          "--coverage"
+      ],
+      "templateFor": "test",
+      "codeLens": {
+          "for": [
+              "run-test",
+              "run-test-file"
+          ],
+          "title": "Coverage"
+      }
+  }
   ]
 }
