@@ -10,6 +10,8 @@
     "miquelddg.dart-barrel-file-generator",
     "usernamehw.errorlens",
     "naumovs.color-highlight",
-    "pflannery.vscode-versionlens"
+    "pflannery.vscode-versionlens",
+    "flutterando.flutter-coverage",
+    "ryanluker.vscode-coverage-gutters"
   ]
 }
