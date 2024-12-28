@@ -4,6 +4,12 @@
   "recommendations": [
     "dart-code.dart-code",
     "dart-code.flutter",
-    "felixangelov.bloc"
+    "felixangelov.bloc",
+    "pkief.material-icon-theme",
+    "jeroen-meijer.pubspec-assist",
+    "miquelddg.dart-barrel-file-generator",
+    "usernamehw.errorlens",
+    "naumovs.color-highlight",
+    "pflannery.vscode-versionlens"
   ]
 }
