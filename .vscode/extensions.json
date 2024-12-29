@@ -12,6 +12,8 @@
     "naumovs.color-highlight",
     "pflannery.vscode-versionlens",
     "flutterando.flutter-coverage",
-    "ryanluker.vscode-coverage-gutters"
+    "ryanluker.vscode-coverage-gutters",
+    "atlassian.atlascode",
+    "figma.figma-vscode-extension"
   ]
 }
