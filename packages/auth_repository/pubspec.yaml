@@ -8,8 +8,11 @@ environment:
   flutter: ^3.24.0
 
 dependencies:
+  equatable: ^2.0.7
+  firebase_auth: ^5.3.4
   flutter:
     sdk: flutter
+  google_sign_in: ^6.2.2
 
 dev_dependencies:
   flutter_test:

@@ -1,4 +1,5 @@
-/// A Very Good Project created by Very Good CLI.
+/// A repository for authentication.
 library;
 
-export 'src/auth_repository.dart';
+export 'src/data/models/models.dart';
+export 'src/domain/auth_repository.dart';
