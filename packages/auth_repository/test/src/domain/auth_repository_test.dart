@@ -81,18 +81,34 @@ void main() {
       expect(repository, isA<FirebaseAuthRepository>());
     });
 
-    group('currentUser', () {
-      test('returns null when no user is signed in', () {
-        when(() => firebaseAuth.currentUser).thenReturn(null);
-        expect(authRepository.currentUser, isNull);
+    group('authStateChanges', () {
+      test('emits AuthUser when Firebase user is not null', () async {
+        // Arrange
+        final mockUser = MockUser();
+        when(() => mockUser.uid).thenReturn('test-uid');
+        when(() => firebaseAuth.authStateChanges())
+            .thenAnswer((_) => Stream.value(mockUser));
+
+        // Act
+        final stream = authRepository.authStateChanges();
+
+        // Assert
+        expect(
+          stream,
+          emits(isA<AuthUser>().having((u) => u.id, 'id', 'test-uid')),
+        );
       });
 
-      test('returns AuthUser when user is signed in', () {
-        when(() => firebaseAuth.currentUser).thenReturn(user);
-        expect(
-          authRepository.currentUser,
-          equals(testUser),
-        );
+      test('emits null when Firebase user is null', () {
+        // Arrange
+        when(() => firebaseAuth.authStateChanges())
+            .thenAnswer((_) => Stream.value(null));
+
+        // Act
+        final stream = authRepository.authStateChanges();
+
+        // Assert
+        expect(stream, emits(null));
       });
     });
 

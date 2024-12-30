@@ -20,8 +20,8 @@ abstract interface class AuthRepository {
     );
   }
 
-  /// The current user.
-  AuthUser? get currentUser;
+  /// The state of the authentication.
+  Stream<AuthUser?> authStateChanges();
 
   /// Sign in with email.
   ///

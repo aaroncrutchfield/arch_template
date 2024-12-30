@@ -25,9 +25,11 @@ class FirebaseAuthRepository implements AuthRepository {
   final PlatformHelper _platformHelper;
 
   @override
-  AuthUser? get currentUser => _firebaseAuth.currentUser != null
-      ? AuthUser.fromFirebaseUser(_firebaseAuth.currentUser!)
-      : null;
+  Stream<AuthUser?> authStateChanges() {
+    return _firebaseAuth.authStateChanges().map(
+          (user) => user != null ? AuthUser.fromFirebaseUser(user) : null,
+        );
+  }
 
   @override
   Future<AuthUser> signInWithApple() async {
