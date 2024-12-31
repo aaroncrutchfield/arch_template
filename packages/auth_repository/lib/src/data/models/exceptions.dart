@@ -10,6 +10,9 @@ abstract class AuthException implements Exception {
 
   /// The stack trace of the error.
   final StackTrace stackTrace;
+
+  @override
+  String toString() => '$runtimeType: $error\n stackTrace: $stackTrace';
 }
 
 /// {@template sign_in_with_email_exception}
