@@ -23,13 +23,13 @@ void main() {
     });
 
     group('routes', () {
-      test('the initial route is the counter page', () {
+      test('the initial route is the login page', () {
         // Act
         final routes = sut.routes;
 
         // Assert
         final initialRoute = routes.first;
-        expect(initialRoute.path, equals('/counter'));
+        expect(initialRoute.path, equals('/login'));
         expect(initialRoute.page, equals(CounterRoute.page));
         expect(initialRoute.initial, isTrue);
       });
