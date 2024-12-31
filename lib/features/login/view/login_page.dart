@@ -34,19 +34,17 @@ class LoginView extends StatelessWidget {
         final isLoading = state is LoginLoading;
         final bloc = context.read<LoginBloc>();
         final l10n = context.l10n;
-        
+
         return Column(
           children: [
             ElevatedButton(
-              onPressed: isLoading 
-                ? null
-                : () => bloc.add(SignInWithGooglePressed()),
+              onPressed:
+                  isLoading ? null : () => bloc.add(SignInWithGooglePressed()),
               child: Text(l10n.signInWithGoogle),
             ),
             ElevatedButton(
-              onPressed: isLoading 
-                ? null
-                : () => bloc.add(SignInWithApplePressed()),
+              onPressed:
+                  isLoading ? null : () => bloc.add(SignInWithApplePressed()),
               child: Text(l10n.signInWithApple),
             ),
           ],
