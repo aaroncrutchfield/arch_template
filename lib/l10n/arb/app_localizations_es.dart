@@ -1,5 +1,6 @@
 import 'app_localizations.dart';
 
+// coverage:ignore-file
 // ignore_for_file: type=lint
 
 /// The translations for Spanish Castilian (`es`).
