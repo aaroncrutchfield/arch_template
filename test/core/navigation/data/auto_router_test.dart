@@ -30,7 +30,7 @@ void main() {
         // Assert
         final initialRoute = routes.first;
         expect(initialRoute.path, equals('/login'));
-        expect(initialRoute.page, equals(CounterRoute.page));
+        expect(initialRoute.page, equals(LoginRoute.page));
         expect(initialRoute.initial, isTrue);
       });
     });
