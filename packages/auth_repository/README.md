@@ -1,67 +1,130 @@
 # Auth Repository
 
-[![style: very good analysis][very_good_analysis_badge]][very_good_analysis_link]
-[![Powered by Mason](https://img.shields.io/endpoint?url=https%3A%2F%2Ftinyurl.com%2Fmason-badge)](https://github.com/felangel/mason)
-[![License: MIT][license_badge]][license_link]
+A Flutter package that provides authentication functionality using Firebase Auth, with support for email/password, Google, and Apple sign-in methods.
 
-A Very Good Project created by Very Good CLI.
+## Features
 
-## Installation 💻
+- Email/password authentication
+- Google Sign-In
+- Apple Sign-In
+- Auth state management
+- Platform-aware implementation
+- Strongly typed exceptions
 
-**❗ In order to start using Auth Repository you must have the [Flutter SDK][flutter_install_link] installed on your machine.**
+## Installation
 
-Install via `flutter pub add`:
+Add this to your package's pubspec.yaml file:
 
-```sh
-dart pub add auth_repository
+```yaml
+dependencies:
+  auth_repository:
+    path: packages/auth_repository
 ```
 
----
+## Getting Started
 
-## Continuous Integration 🤖
+1. Initialize Firebase in your app
+2. Create an instance of AuthRepository:
 
-Auth Repository comes with a built-in [GitHub Actions workflow][github_actions_link] powered by [Very Good Workflows][very_good_workflows_link] but you can also add your preferred CI/CD solution.
-
-Out of the box, on each pull request and push, the CI `formats`, `lints`, and `tests` the code. This ensures the code remains consistent and behaves correctly as you add functionality or make changes. The project uses [Very Good Analysis][very_good_analysis_link] for a strict set of analysis options used by our team. Code coverage is enforced using the [Very Good Workflows][very_good_coverage_link].
-
----
-
-## Running Tests 🧪
-
-For first time users, install the [very_good_cli][very_good_cli_link]:
-
-```sh
-dart pub global activate very_good_cli
+```dart
+final authRepository = AuthRepository(FirebaseAuth.instance);
 ```
 
-To run all unit tests:
+## Usage
 
-```sh
-very_good test --coverage
+### Listen to Auth State Changes
+
+```dart
+authRepository.authStateChanges().listen((user) {
+  if (user != null) {
+    // User is signed in
+    print('Signed in: ${user.id}');
+  } else {
+    // User is signed out
+    print('Signed out');
+  }
+});
 ```
 
-To view the generated coverage report you can use [lcov](https://github.com/linux-test-project/lcov).
+### Sign In with Email/Password
 
-```sh
-# Generate Coverage Report
-genhtml coverage/lcov.info -o coverage/
-
-# Open Coverage Report
-open coverage/index.html
+```dart
+try {
+  final user = await authRepository.signInWithEmail(
+    email: 'user@example.com',
+    password: 'password123',
+  );
+  print('Signed in: ${user.id}');
+} on SignInWithEmailException catch (e) {
+  print('Sign in failed: $e');
+}
 ```
 
-[flutter_install_link]: https://docs.flutter.dev/get-started/install
-[github_actions_link]: https://docs.github.com/en/actions/learn-github-actions
-[license_badge]: https://img.shields.io/badge/license-MIT-blue.svg
-[license_link]: https://opensource.org/licenses/MIT
-[logo_black]: https://raw.githubusercontent.com/VGVentures/very_good_brand/main/styles/README/vgv_logo_black.png#gh-light-mode-only
-[logo_white]: https://raw.githubusercontent.com/VGVentures/very_good_brand/main/styles/README/vgv_logo_white.png#gh-dark-mode-only
-[mason_link]: https://github.com/felangel/mason
-[very_good_analysis_badge]: https://img.shields.io/badge/style-very_good_analysis-B22C89.svg
-[very_good_analysis_link]: https://pub.dev/packages/very_good_analysis
-[very_good_cli_link]: https://pub.dev/packages/very_good_cli
-[very_good_coverage_link]: https://github.com/marketplace/actions/very-good-coverage
-[very_good_ventures_link]: https://verygood.ventures
-[very_good_ventures_link_light]: https://verygood.ventures#gh-light-mode-only
-[very_good_ventures_link_dark]: https://verygood.ventures#gh-dark-mode-only
-[very_good_workflows_link]: https://github.com/VeryGoodOpenSource/very_good_workflows
+### Sign In with Google
+
+```dart
+try {
+  final user = await authRepository.signInWithGoogle();
+  print('Signed in with Google: ${user.id}');
+} on SignInWithGoogleException catch (e) {
+  print('Google sign in failed: $e');
+}
+```
+
+### Sign In with Apple
+
+```dart
+try {
+  final user = await authRepository.signInWithApple();
+  print('Signed in with Apple: ${user.id}');
+} on SignInWithAppleException catch (e) {
+  print('Apple sign in failed: $e');
+}
+```
+
+### Sign Out
+
+```dart
+try {
+  await authRepository.signOut();
+  print('Signed out successfully');
+} on SignOutException catch (e) {
+  print('Sign out failed: $e');
+}
+```
+
+## Error Handling
+
+The package provides typed exceptions for different authentication failures:
+
+- `SignInWithEmailException`
+- `SignInWithGoogleException`
+- `SignInWithAppleException`
+- `SignOutException`
+
+Each exception includes the original error and stack trace for debugging.
+
+## Testing
+
+Reference the test file for examples of mocking and testing the repository:
+
+```dart:packages/auth_repository/test/src/domain/auth_repository_test.dart
+startLine: 1
+endLine: 289
+```
+
+## Platform Support
+
+- ✅ Android
+- ✅ iOS
+- ✅ Web
+- ✅ macOS
+- ✅ Windows
+- ❌ Linux (Firebase not configured)
+
+## Additional Information
+
+- Follows Very Good Ventures' package structure
+- Uses mocktail for testing
+- Implements platform-specific authentication flows
+- Provides strongly-typed user model
