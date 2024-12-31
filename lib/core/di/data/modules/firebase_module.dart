@@ -7,7 +7,6 @@ import 'package:injectable/injectable.dart';
 
 @module
 abstract class FirebaseModule {
-
   @development
   @singleton
   FirebaseOptions getDevOptions() => dev.DefaultFirebaseOptions.currentPlatform;
@@ -19,7 +18,6 @@ abstract class FirebaseModule {
   @staging
   @singleton
   FirebaseOptions getStagingOptions() => throw UnimplementedError();
-
 
   @singleton
   @development

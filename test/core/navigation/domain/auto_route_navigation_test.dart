@@ -160,7 +160,8 @@ void main() {
           () {
         // Arrange
         const routeName = '/test-route';
-        when(() => mockRouter.replaceNamed(routeName)).thenAnswer((_) async => {});
+        when(() => mockRouter.replaceNamed(routeName))
+            .thenAnswer((_) async => {});
 
         // Act
         sut.replaceNamed(routeName);

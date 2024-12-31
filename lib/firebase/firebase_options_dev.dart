@@ -63,7 +63,8 @@ class DefaultFirebaseOptions {
     messagingSenderId: '994143003163',
     projectId: 'apostletec-arch-template',
     storageBucket: 'apostletec-arch-template.firebasestorage.app',
-    iosClientId: '994143003163-vejch33lhso3fm9c8vp03b1539ublt8h.apps.googleusercontent.com',
+    iosClientId:
+        '994143003163-vejch33lhso3fm9c8vp03b1539ublt8h.apps.googleusercontent.com',
     iosBundleId: 'com.fluttermasterclass.arch-template.dev',
   );
 
@@ -73,7 +74,8 @@ class DefaultFirebaseOptions {
     messagingSenderId: '994143003163',
     projectId: 'apostletec-arch-template',
     storageBucket: 'apostletec-arch-template.firebasestorage.app',
-    iosClientId: '994143003163-vejch33lhso3fm9c8vp03b1539ublt8h.apps.googleusercontent.com',
+    iosClientId:
+        '994143003163-vejch33lhso3fm9c8vp03b1539ublt8h.apps.googleusercontent.com',
     iosBundleId: 'com.fluttermasterclass.arch-template.dev',
   );
 

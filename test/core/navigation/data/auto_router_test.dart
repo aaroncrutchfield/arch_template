@@ -3,7 +3,6 @@ import 'package:arch_template/core/navigation/data/auto_router.gr.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter_test/flutter_test.dart';
 
-
 void main() {
   group('RootAutoRouter', () {
     late RootAutoRouter sut;

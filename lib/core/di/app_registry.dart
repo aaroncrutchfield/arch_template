@@ -1,4 +1,3 @@
-
 import 'package:arch_template/core/di/data/get_it/get_it_registry_source.dart';
 import 'package:arch_template/core/di/data/injectable/injectable_config.dart';
 import 'package:arch_template/core/di/domain/get_it_injection_registry.dart';

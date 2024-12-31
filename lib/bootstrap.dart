@@ -7,7 +7,6 @@ import 'package:bloc/bloc.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_web_plugins/url_strategy.dart';
 
-
 class AppBlocObserver extends BlocObserver {
   const AppBlocObserver();
 
@@ -32,7 +31,6 @@ Future<void> bootstrap({
     log(details.exceptionAsString(), stackTrace: details.stack);
   };
   WidgetsFlutterBinding.ensureInitialized();
-
 
   usePathUrlStrategy();
 

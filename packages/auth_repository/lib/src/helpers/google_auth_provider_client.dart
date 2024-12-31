@@ -15,11 +15,10 @@ class GoogleAuthProviderClient {
   OAuthCredential createCredential({
     required String? accessToken,
     required String? idToken,
-    }) {
-      return GoogleAuthProvider.credential(
-        idToken: idToken,
-        accessToken: accessToken,
-      );
-    }
-
+  }) {
+    return GoogleAuthProvider.credential(
+      idToken: idToken,
+      accessToken: accessToken,
+    );
+  }
 }

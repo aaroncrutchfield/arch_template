@@ -15,10 +15,10 @@ class AuthUser extends Equatable {
 
   /// Create an [AuthUser] from a [User].
   AuthUser.fromFirebaseUser(User user)
-    : id = user.uid,
-      email = user.email ?? '',
-      name = user.displayName ?? '',
-      photoUrl = user.photoURL ?? '';
+      : id = user.uid,
+        email = user.email ?? '',
+        name = user.displayName ?? '',
+        photoUrl = user.photoURL ?? '';
 
   /// The ID of the user.
   final String id;
