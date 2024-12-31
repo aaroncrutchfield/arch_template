@@ -1,7 +1,7 @@
 import 'package:arch_template/core/di/app_registry.dart';
 import 'package:arch_template/core/navigation/navigation.dart';
 import 'package:arch_template/features/auth/bloc/auth_bloc.dart';
-import 'package:arch_template/l10n/l10n.dart';
+import 'package:arch_template/l10n/arb/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 

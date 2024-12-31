@@ -1,5 +1,7 @@
 import 'package:arch_template/core/di/app_registry.dart';
+import 'package:arch_template/features/common/extensions/context.dart';
 import 'package:arch_template/features/login/bloc/login_bloc.dart';
+import 'package:arch_template/l10n/l10n.dart';
 import 'package:auto_route/annotations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -11,7 +13,7 @@ class LoginPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (_) => appRegistry.get<LoginBloc>(),
+      create: (ctx) => appRegistry.get<LoginBloc>(param1: context.l10n),
       child: const LoginView(),
     );
   }
@@ -22,36 +24,34 @@ class LoginView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final bloc = context.read<LoginBloc>();
-    return BlocListener<LoginBloc, LoginState>(
+    return BlocConsumer<LoginBloc, LoginState>(
       listener: (context, state) {
-        // switch (state) {
-        //   case LoginSuccess():
-        //     ScaffoldMessenger.of(context).showSnackBar(
-        //       const SnackBar(content: Text('Login Success')),
-        //     );
-        //   case LoginFailure():
-        //     ScaffoldMessenger.of(context).showSnackBar(
-        //       SnackBar(content: Text(state.message)),
-        //     );
-        //   default:
-        //     break;
-        // }
+        if (state is LoginFailure) {
+          context.showSnackBar(SnackBar(content: Text(state.message)));
+        }
       },
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          ElevatedButton(
-            onPressed: () => bloc.add(SignInWithGooglePressed()),
-            child: const Text('Sign in with Google'),
-          ),
-          ElevatedButton(
-            onPressed: () => bloc.add(SignInWithApplePressed()),
-            child: const Text('Sign in with Apple'),
-          ),
-        ],
-      ),
+      builder: (context, state) {
+        final isLoading = state is LoginLoading;
+        final bloc = context.read<LoginBloc>();
+        final l10n = context.l10n;
+        
+        return Column(
+          children: [
+            ElevatedButton(
+              onPressed: isLoading 
+                ? null
+                : () => bloc.add(SignInWithGooglePressed()),
+              child: Text(l10n.signInWithGoogle),
+            ),
+            ElevatedButton(
+              onPressed: isLoading 
+                ? null
+                : () => bloc.add(SignInWithApplePressed()),
+              child: Text(l10n.signInWithApple),
+            ),
+          ],
+        );
+      },
     );
   }
 }
