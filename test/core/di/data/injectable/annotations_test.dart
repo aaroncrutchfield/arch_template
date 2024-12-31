@@ -1,4 +1,5 @@
-import 'package:arch_template/core/di/data/injectable/annotations.dart' as config;
+import 'package:arch_template/core/di/data/injectable/annotations.dart'
+    as config;
 
 import 'package:flutter_test/flutter_test.dart';
 

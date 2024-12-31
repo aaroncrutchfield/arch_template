@@ -1,9 +1,9 @@
 import 'package:flutter/widgets.dart';
 
-/// Navigation interface that abstracts routing functionality 
+/// Navigation interface that abstracts routing functionality
 /// for the application.
 ///
-/// This interface provides a common contract for implementing 
+/// This interface provides a common contract for implementing
 /// navigation solutions,
 /// making it easier to switch between different routing implementations.
 abstract interface class AppNavigation {
@@ -21,7 +21,7 @@ abstract interface class AppNavigation {
   /// Pushes a named route onto the navigation stack.
   ///
   /// [name] is the name of the route to push.
-  /// Returns a [Future] that completes with the result value when 
+  /// Returns a [Future] that completes with the result value when
   /// the route is popped.
   Future<T?> pushNamed<T extends Object?>(String name);
 

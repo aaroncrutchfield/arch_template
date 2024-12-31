@@ -3,7 +3,6 @@ import 'package:arch_template/core/navigation/data/auto_router.gr.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter_test/flutter_test.dart';
 
-
 void main() {
   group('RootAutoRouter', () {
     late RootAutoRouter sut;
@@ -24,14 +23,14 @@ void main() {
     });
 
     group('routes', () {
-      test('the initial route is the counter page', () {
+      test('the initial route is the login page', () {
         // Act
         final routes = sut.routes;
 
         // Assert
         final initialRoute = routes.first;
-        expect(initialRoute.path, equals('/counter'));
-        expect(initialRoute.page, equals(CounterRoute.page));
+        expect(initialRoute.path, equals('/login'));
+        expect(initialRoute.page, equals(LoginRoute.page));
         expect(initialRoute.initial, isTrue);
       });
     });

@@ -1,4 +1,3 @@
-
 import 'package:arch_template/app/environments.dart';
 
 /// Interface for managing dependency injection in the application.

@@ -1,4 +1,3 @@
-
 import 'package:arch_template/core/navigation/data/auto_router.gr.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:injectable/injectable.dart';

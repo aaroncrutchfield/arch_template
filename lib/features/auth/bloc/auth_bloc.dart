@@ -15,7 +15,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   ) : super(AuthInitial()) {
     on<CheckAuthStateChanges>(_onCheckAuthStateChanges);
 
-    add(CheckAuthStateChanges());
+    add(const CheckAuthStateChanges());
   }
 
   final AuthRepository _authRepository;
@@ -25,15 +25,26 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     CheckAuthStateChanges event,
     Emitter<AuthState> emit,
   ) async {
-    await emit.onEach(
-      _authRepository.authStateChanges(),
-      onData: (currentUser) {
-        if (currentUser != null) {
-          _appNavigation.replaceNamed('/counter');
-        } else {
+    try {
+      await emit.onEach(
+        _authRepository.authStateChanges(),
+        onData: (currentUser) {
+          if (currentUser != null) {
+            _appNavigation.replaceNamed('/counter');
+          } else {
+            _appNavigation.replaceNamed('/login');
+          }
+        },
+        onError: (e, s) {
           _appNavigation.replaceNamed('/login');
-        }
-      },
-    );
+          emit(AuthFailure(e.toString()));
+          addError(e, s);
+        },
+      );
+    } catch (e, s) {
+      _appNavigation.replaceNamed('/login');
+      emit(AuthFailure(e.toString()));
+      addError(e, s);
+    }
   }
 }

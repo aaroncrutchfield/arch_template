@@ -1,3 +1,4 @@
+import 'package:arch_template/l10n/arb/app_localizations.dart';
 import 'package:auth_repository/auth_repository.dart';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
@@ -8,12 +9,17 @@ part 'login_state.dart';
 
 @injectable
 class LoginBloc extends Bloc<LoginEvent, LoginState> {
-  LoginBloc(this._authRepository) : super(LoginInitial()) {
+  LoginBloc(
+    this._authRepository,
+    @factoryParam AppLocalizations l10n,
+  ) : super(LoginInitial()) {
+    _l10n = l10n;
     on<SignInWithGooglePressed>(_onSignInWithGooglePressed);
     on<SignInWithApplePressed>(_onSignInWithApplePressed);
   }
 
   final AuthRepository _authRepository;
+  late final AppLocalizations _l10n;
 
   Future<void> _onSignInWithGooglePressed(
     SignInWithGooglePressed event,
@@ -24,7 +30,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
       await _authRepository.signInWithGoogle();
       emit(LoginSuccess());
     } catch (e, s) {
-      emit(LoginFailure(e.toString()));
+      emit(LoginFailure(_l10n.signInWithGoogleFailed));
       addError(e, s);
     }
   }
@@ -38,7 +44,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
       await _authRepository.signInWithApple();
       emit(LoginSuccess());
     } catch (e, s) {
-      emit(LoginFailure(e.toString()));
+      emit(LoginFailure(_l10n.signInWithAppleFailed));
       addError(e, s);
     }
   }

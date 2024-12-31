@@ -1,4 +1,3 @@
-
 import 'package:arch_template/core/navigation/data/auto_router.dart';
 import 'package:arch_template/core/navigation/domain/app_navigation.dart';
 import 'package:flutter/widgets.dart';
