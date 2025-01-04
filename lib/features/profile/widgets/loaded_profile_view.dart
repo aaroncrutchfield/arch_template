@@ -50,7 +50,7 @@ class LoadedProfileView extends StatelessWidget {
           contentPadding: const EdgeInsets.symmetric(horizontal: 16),
           leading: const Icon(Icons.edit),
           title: Text(l10n.editProfile),
-              onTap: onEditProfile,
+          onTap: onEditProfile,
         ),
         ListTile(
           contentPadding: const EdgeInsets.symmetric(horizontal: 16),

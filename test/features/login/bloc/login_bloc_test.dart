@@ -69,7 +69,8 @@ void main() {
         'emits [LoginLoading, GoogleLoginFailure] when SignInWithGoogleException occurs',
         setUp: () {
           when(() => authRepository.signInWithGoogle()).thenThrow(
-              SignInWithGoogleException('error', StackTrace.current));
+            SignInWithGoogleException('error', StackTrace.current),
+          );
         },
         build: buildBloc,
         act: (bloc) => bloc.add(SignInWithGooglePressed()),

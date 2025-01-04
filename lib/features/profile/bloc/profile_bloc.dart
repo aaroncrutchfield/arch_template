@@ -27,8 +27,8 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
     try {
       emit(ProfileLoading());
       final user = await _authRepository.authStateChanges().first.then(
-        (user) => user != null ? User.fromAuthUser(user) : null,
-      );
+            (user) => user != null ? User.fromAuthUser(user) : null,
+          );
 
       if (user != null) {
         emit(ProfileLoaded(user: user));

@@ -44,10 +44,10 @@ class ProfileView extends StatelessWidget {
             ProfileInitial() || ProfileLoading() => const LoadingIndicator(),
             ProfileError(:final message) => ProfileErrorView(message: message),
             ProfileLoaded(:final user) => LoadedProfileView(
-              user: user,
-              onEditProfile: () => bloc.add(const ProfileEditRequested()),
-              onSettings: () => bloc.add(const ProfileSettingsRequested()),
-            ),
+                user: user,
+                onEditProfile: () => bloc.add(const ProfileEditRequested()),
+                onSettings: () => bloc.add(const ProfileSettingsRequested()),
+              ),
           },
         );
       },
