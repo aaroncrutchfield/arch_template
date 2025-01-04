@@ -1,7 +1,7 @@
 {
     "@@locale": "en",
-    "counterAppBarTitle": "Counter",
-    "@counterAppBarTitle": {
+    "counter": "Counter",
+    "@counter": {
         "description": "Text shown in the AppBar of the Counter Page"
     },
     "signInWithGoogle": "Sign in with Google",
@@ -19,5 +19,21 @@
     "signInWithAppleFailed": "Apple Sign In failed",
     "@signInWithAppleFailed": {
         "description": "Text shown when the Apple Sign In fails"
+    },
+    "profile": "Profile",
+    "@profile": {
+        "description": "Text shown in the AppBar of the Profile Page"
+    },
+    "noNameProvided": "No name provided",
+    "@noNameProvided": {
+        "description": "Text shown when the user has not provided a name"
+    },
+    "editProfile": "Edit Profile",
+    "@editProfile": {
+        "description": "Text shown in the Edit Profile Page"
+    },
+    "settings": "Settings",
+    "@settings": {
+        "description": "Text shown in the Settings Page"
     }
 }

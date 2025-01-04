@@ -23,57 +23,72 @@ class MockInjectionRegistry extends Mock implements InjectionRegistry {}
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
 
+  late LoginBloc loginBloc;
+  late AppLocalizations l10n;
+
+  setUp(() {
+    loginBloc = MockLoginBloc();
+    l10n = MockAppLocalizations();
+
+    // Setup default bloc state
+    when(() => loginBloc.state).thenReturn(LoginInitial());
+
+    // Setup default l10n strings
+    when(() => l10n.signInWithGoogle).thenReturn('Sign in with Google');
+    when(() => l10n.signInWithApple).thenReturn('Sign in with Apple');
+    when(() => l10n.signInWithGoogleFailed).thenReturn('Google sign in failed');
+    when(() => l10n.signInWithAppleFailed).thenReturn('Apple sign in failed');
+
+    appRegistry.register<LoginBloc>(() => loginBloc);
+
+    // Register test doubles
+    registerFallbackValue(LoginInitial());
+    registerFallbackValue(SignInWithGooglePressed());
+    registerFallbackValue(SignInWithApplePressed());
+  });
+
+  tearDown(appRegistry.reset);
+
   group('LoginPage', () {
-    late LoginBloc loginBloc;
-
-    setUp(() {
-      loginBloc = MockLoginBloc();
-
-      // Setup default bloc state
-      when(() => loginBloc.state).thenReturn(LoginInitial());
-
-      appRegistry.register<LoginBloc>(() => loginBloc);
-
-      // Register test doubles
-      registerFallbackValue(LoginInitial());
-      registerFallbackValue(SignInWithGooglePressed());
-      registerFallbackValue(SignInWithApplePressed());
-    });
-
-    tearDown(appRegistry.reset);
-
     testWidgets('renders LoginView', (tester) async {
-      await tester.pumpApp(
-        BlocProvider.value(
-          value: loginBloc,
-          child: const LoginPage(),
-        ),
-      );
+      await tester.pumpApp(const LoginPage());
 
       expect(find.byType(LoginView), findsOneWidget);
     });
 
-    group('LoginView', () {
-      testWidgets('renders sign in buttons', (tester) async {
-        await tester.pumpApp(
-          BlocProvider.value(
-            value: loginBloc,
-            child: const LoginView(),
-          ),
-        );
+    testWidgets('provides LoginBloc from registry', (tester) async {
+      await tester.pumpApp(const LoginPage());
 
-        expect(find.text('Sign in with Google'), findsOneWidget);
-        expect(find.text('Sign in with Apple'), findsOneWidget);
-      });
+      expect(
+        find.byWidgetPredicate(
+          (widget) => widget is BlocProvider<LoginBloc>,
+        ),
+        findsOneWidget,
+      );
+    });
+  });
 
-      testWidgets('adds SignInWithGooglePressed when Google button is tapped',
+  group('LoginView', () {
+    Future<void> pumpLoginView(WidgetTester tester) {
+      return tester.pumpApp(
+        BlocProvider.value(
+          value: loginBloc,
+          child: const Scaffold(body: LoginView()),
+        ),
+      );
+    }
+
+    testWidgets('renders sign in buttons with correct text', (tester) async {
+      await pumpLoginView(tester);
+
+      expect(find.text('Sign in with Google'), findsOneWidget);
+      expect(find.text('Sign in with Apple'), findsOneWidget);
+    });
+
+    group('Google sign in', () {
+      testWidgets('adds SignInWithGooglePressed when button is tapped',
           (tester) async {
-        await tester.pumpApp(
-          BlocProvider.value(
-            value: loginBloc,
-            child: const LoginView(),
-          ),
-        );
+        await pumpLoginView(tester);
 
         await tester.tap(find.text('Sign in with Google'));
         await tester.pump();
@@ -81,25 +96,8 @@ void main() {
         verify(() => loginBloc.add(SignInWithGooglePressed())).called(1);
       });
 
-      testWidgets('adds SignInWithApplePressed when Apple button is tapped',
+      testWidgets('shows snackbar with correct message on GoogleLoginFailure',
           (tester) async {
-        await tester.pumpApp(
-          BlocProvider.value(
-            value: loginBloc,
-            child: const LoginView(),
-          ),
-        );
-
-        await tester.tap(find.text('Sign in with Apple'));
-        await tester.pump();
-
-        verify(() => loginBloc.add(SignInWithApplePressed())).called(1);
-      });
-
-      testWidgets('shows snackbar when state is LoginFailure', (tester) async {
-        const errorMessage = 'Sign in failed';
-
-        // Create a stream controller to emit states
         final controller = StreamController<LoginState>();
         whenListen(
           loginBloc,
@@ -107,50 +105,110 @@ void main() {
           initialState: LoginInitial(),
         );
 
-        await tester.pumpApp(
-          BlocProvider.value(
-            value: loginBloc,
-            child: const Scaffold(body: LoginView()),
-          ),
-        );
+        await pumpLoginView(tester);
 
-        // Emit the failure state
-        controller.add(const LoginFailure(errorMessage));
-        await tester.pump();
+        controller.add(GoogleLoginFailure());
+        await tester.pumpAndSettle();
 
-        // Verify snackbar is shown with error message
         expect(find.byType(SnackBar), findsOneWidget);
-        expect(find.text(errorMessage), findsOneWidget);
+        expect(find.text('Google Sign In failed'), findsOneWidget);
 
-        // Clean up
         await controller.close();
       });
 
-      testWidgets('disables buttons during loading state', (tester) async {
+      testWidgets('disables button during loading state', (tester) async {
         when(() => loginBloc.state).thenReturn(LoginLoading());
 
-        await tester.pumpApp(
-          BlocProvider.value(
-            value: loginBloc,
-            child: const LoginView(),
-          ),
-        );
+        await pumpLoginView(tester);
 
-        final googleButton =
+        final button =
             find.widgetWithText(ElevatedButton, 'Sign in with Google');
-        final appleButton =
-            find.widgetWithText(ElevatedButton, 'Sign in with Apple');
-
         expect(
-          tester.widget<ElevatedButton>(googleButton).enabled,
+          tester.widget<ElevatedButton>(button).enabled,
           isFalse,
           reason: 'Google sign-in button should be disabled during loading',
         );
+      });
+    });
+
+    group('Apple sign in', () {
+      testWidgets('adds SignInWithApplePressed when button is tapped',
+          (tester) async {
+        await pumpLoginView(tester);
+
+        await tester.tap(find.text('Sign in with Apple'));
+        await tester.pump();
+
+        verify(() => loginBloc.add(SignInWithApplePressed())).called(1);
+      });
+
+      testWidgets('shows snackbar with correct message on AppleLoginFailure',
+          (tester) async {
+        final controller = StreamController<LoginState>();
+        whenListen(
+          loginBloc,
+          controller.stream,
+          initialState: LoginInitial(),
+        );
+
+        await pumpLoginView(tester);
+
+        controller.add(AppleLoginFailure());
+        await tester.pumpAndSettle();
+
+        expect(find.byType(SnackBar), findsOneWidget);
+        expect(find.text('Apple Sign In failed'), findsOneWidget);
+
+        await controller.close();
+      });
+
+      testWidgets('disables button during loading state', (tester) async {
+        when(() => loginBloc.state).thenReturn(LoginLoading());
+
+        await pumpLoginView(tester);
+
+        final button =
+            find.widgetWithText(ElevatedButton, 'Sign in with Apple');
         expect(
-          tester.widget<ElevatedButton>(appleButton).enabled,
+          tester.widget<ElevatedButton>(button).enabled,
           isFalse,
           reason: 'Apple sign-in button should be disabled during loading',
         );
+      });
+    });
+
+    group('loading state', () {
+      testWidgets('disables both buttons during loading', (tester) async {
+        when(() => loginBloc.state).thenReturn(LoginLoading());
+
+        await pumpLoginView(tester);
+
+        final buttons = find.byType(ElevatedButton);
+        expect(buttons, findsNWidgets(2));
+
+        for (final button in tester.widgetList<ElevatedButton>(buttons)) {
+          expect(button.enabled, isFalse);
+        }
+      });
+    });
+
+    group('success state', () {
+      testWidgets('does not show snackbar on LoginSuccess', (tester) async {
+        final controller = StreamController<LoginState>();
+        whenListen(
+          loginBloc,
+          controller.stream,
+          initialState: LoginInitial(),
+        );
+
+        await pumpLoginView(tester);
+
+        controller.add(LoginSuccess());
+        await tester.pumpAndSettle();
+
+        expect(find.byType(SnackBar), findsNothing);
+
+        await controller.close();
       });
     });
   });
