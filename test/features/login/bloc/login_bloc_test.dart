@@ -1,5 +1,4 @@
 import 'package:arch_template/features/login/bloc/login_bloc.dart';
-import 'package:arch_template/l10n/arb/app_localizations.dart';
 import 'package:auth_repository/auth_repository.dart';
 import 'package:bloc_test/bloc_test.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -9,39 +8,54 @@ class MockAuthRepository extends Mock implements AuthRepository {}
 
 class MockAuthUser extends Mock implements AuthUser {}
 
-class MockAppLocalizations extends Mock implements AppLocalizations {}
-
 void main() {
+  late AuthRepository authRepository;
+  late AuthUser mockUser;
+
+  setUp(() {
+    authRepository = MockAuthRepository();
+    mockUser = MockAuthUser();
+
+    // Register fallback values for mocktail
+    registerFallbackValue(LoginInitial());
+    registerFallbackValue(SignInWithGooglePressed());
+    registerFallbackValue(SignInWithApplePressed());
+  });
+
+  LoginBloc buildBloc() => LoginBloc(authRepository);
+
   group('LoginBloc', () {
-    late AuthRepository authRepository;
-    late AuthUser authUser;
-    late AppLocalizations l10n;
+    group('constructor', () {
+      test('works properly', () {
+        expect(buildBloc, returnsNormally);
+      });
 
-    setUp(() {
-      authRepository = MockAuthRepository();
-      authUser = MockAuthUser();
-      l10n = MockAppLocalizations();
-
-      when(() => l10n.signInWithGoogleFailed)
-          .thenReturn('Google sign in failed');
-      when(() => l10n.signInWithAppleFailed).thenReturn('Apple sign in failed');
+      test('has correct initial state', () {
+        expect(buildBloc().state, equals(LoginInitial()));
+      });
     });
 
-    test('initial state is LoginInitial', () {
-      expect(
-        LoginBloc(authRepository, l10n).state,
-        equals(LoginInitial()),
+    group('error handling', () {
+      blocTest<LoginBloc, LoginState>(
+        'handles errors properly',
+        build: buildBloc,
+        act: (bloc) => bloc.add(SignInWithGooglePressed()),
+        setUp: () {
+          when(() => authRepository.signInWithGoogle())
+              .thenThrow(Exception('test error'));
+        },
+        errors: () => [isA<Exception>()],
       );
     });
 
     group('SignInWithGooglePressed', () {
       blocTest<LoginBloc, LoginState>(
-        'emits [LoginLoading, LoginSuccess] when sign in succeeds',
+        'emits [LoginLoading, LoginSuccess] when successful',
         setUp: () {
           when(() => authRepository.signInWithGoogle())
-              .thenAnswer((_) async => authUser);
+              .thenAnswer((_) async => mockUser);
         },
-        build: () => LoginBloc(authRepository, l10n),
+        build: buildBloc,
         act: (bloc) => bloc.add(SignInWithGooglePressed()),
         expect: () => [
           LoginLoading(),
@@ -53,45 +67,62 @@ void main() {
       );
 
       blocTest<LoginBloc, LoginState>(
-        'emits [LoginLoading, LoginFailure] when sign in fails',
+        'emits [LoginLoading, GoogleLoginFailure] when '
+        'SignInWithGoogleException occurs',
         setUp: () {
-          const error =
-              SignInWithGoogleException('Sign in failed', StackTrace.empty);
-          when(() => authRepository.signInWithGoogle()).thenThrow(error);
+          when(() => authRepository.signInWithGoogle()).thenThrow(
+            SignInWithGoogleException('error', StackTrace.current),
+          );
         },
-        build: () => LoginBloc(authRepository, l10n),
+        build: buildBloc,
         act: (bloc) => bloc.add(SignInWithGooglePressed()),
         expect: () => [
           LoginLoading(),
-          const LoginFailure('Google sign in failed'),
+          GoogleLoginFailure(),
         ],
         verify: (_) {
           verify(() => authRepository.signInWithGoogle()).called(1);
-          verify(() => l10n.signInWithGoogleFailed).called(1);
         },
       );
 
       blocTest<LoginBloc, LoginState>(
-        'adds error to bloc when sign in fails',
+        'emits [LoginLoading, GoogleLoginFailure] when generic '
+        'exception occurs',
         setUp: () {
-          const error =
-              SignInWithGoogleException('Sign in failed', StackTrace.empty);
-          when(() => authRepository.signInWithGoogle()).thenThrow(error);
+          when(() => authRepository.signInWithGoogle())
+              .thenThrow(Exception('error'));
         },
-        build: () => LoginBloc(authRepository, l10n),
+        build: buildBloc,
         act: (bloc) => bloc.add(SignInWithGooglePressed()),
-        errors: () => [isA<SignInWithGoogleException>()],
+        expect: () => [
+          LoginLoading(),
+          GoogleLoginFailure(),
+        ],
+        verify: (_) {
+          verify(() => authRepository.signInWithGoogle()).called(1);
+        },
+      );
+
+      blocTest<LoginBloc, LoginState>(
+        'adds error to bloc when exception occurs',
+        setUp: () {
+          when(() => authRepository.signInWithGoogle())
+              .thenThrow(Exception('error'));
+        },
+        build: buildBloc,
+        act: (bloc) => bloc.add(SignInWithGooglePressed()),
+        errors: () => [isA<Exception>()],
       );
     });
 
     group('SignInWithApplePressed', () {
       blocTest<LoginBloc, LoginState>(
-        'emits [LoginLoading, LoginSuccess] when sign in succeeds',
+        'emits [LoginLoading, LoginSuccess] when successful',
         setUp: () {
           when(() => authRepository.signInWithApple())
-              .thenAnswer((_) async => authUser);
+              .thenAnswer((_) async => mockUser);
         },
-        build: () => LoginBloc(authRepository, l10n),
+        build: buildBloc,
         act: (bloc) => bloc.add(SignInWithApplePressed()),
         expect: () => [
           LoginLoading(),
@@ -103,34 +134,49 @@ void main() {
       );
 
       blocTest<LoginBloc, LoginState>(
-        'emits [LoginLoading, LoginFailure] when sign in fails',
+        'emits [LoginLoading, AppleLoginFailure] when '
+        'SignInWithAppleException occurs',
         setUp: () {
-          const error =
-              SignInWithAppleException('Sign in failed', StackTrace.empty);
-          when(() => authRepository.signInWithApple()).thenThrow(error);
+          when(() => authRepository.signInWithApple())
+              .thenThrow(SignInWithAppleException('error', StackTrace.current));
         },
-        build: () => LoginBloc(authRepository, l10n),
+        build: buildBloc,
         act: (bloc) => bloc.add(SignInWithApplePressed()),
         expect: () => [
           LoginLoading(),
-          const LoginFailure('Apple sign in failed'),
+          AppleLoginFailure(),
         ],
         verify: (_) {
           verify(() => authRepository.signInWithApple()).called(1);
-          verify(() => l10n.signInWithAppleFailed).called(1);
         },
       );
 
       blocTest<LoginBloc, LoginState>(
-        'adds error to bloc when sign in fails',
+        'emits [LoginLoading, AppleLoginFailure] when generic exception occurs',
         setUp: () {
-          const error =
-              SignInWithAppleException('Sign in failed', StackTrace.empty);
-          when(() => authRepository.signInWithApple()).thenThrow(error);
+          when(() => authRepository.signInWithApple())
+              .thenThrow(Exception('error'));
         },
-        build: () => LoginBloc(authRepository, l10n),
+        build: buildBloc,
         act: (bloc) => bloc.add(SignInWithApplePressed()),
-        errors: () => [isA<SignInWithAppleException>()],
+        expect: () => [
+          LoginLoading(),
+          AppleLoginFailure(),
+        ],
+        verify: (_) {
+          verify(() => authRepository.signInWithApple()).called(1);
+        },
+      );
+
+      blocTest<LoginBloc, LoginState>(
+        'adds error to bloc when exception occurs',
+        setUp: () {
+          when(() => authRepository.signInWithApple())
+              .thenThrow(Exception('error'));
+        },
+        build: buildBloc,
+        act: (bloc) => bloc.add(SignInWithApplePressed()),
+        errors: () => [isA<Exception>()],
       );
     });
   });

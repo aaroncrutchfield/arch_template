@@ -20,7 +20,7 @@ import 'package:arch_template/core/navigation/domain/auto_route_navigation.dart'
 import 'package:arch_template/core/navigation/navigation.dart' as _i423;
 import 'package:arch_template/features/auth/bloc/auth_bloc.dart' as _i474;
 import 'package:arch_template/features/login/bloc/login_bloc.dart' as _i21;
-import 'package:arch_template/l10n/arb/app_localizations.dart' as _i478;
+import 'package:arch_template/features/profile/bloc/profile_bloc.dart' as _i206;
 import 'package:auth_repository/auth_repository.dart' as _i1026;
 import 'package:firebase_auth/firebase_auth.dart' as _i59;
 import 'package:firebase_core/firebase_core.dart' as _i982;
@@ -76,14 +76,10 @@ extension GetItInjectableX on _i174.GetIt {
           gh<_i1026.AuthRepository>(),
           gh<_i423.AppNavigation>(),
         ));
-    gh.factoryParam<_i21.LoginBloc, _i478.AppLocalizations, dynamic>((
-      l10n,
-      _,
-    ) =>
-        _i21.LoginBloc(
-          gh<_i1026.AuthRepository>(),
-          l10n,
-        ));
+    gh.factory<_i21.LoginBloc>(
+        () => _i21.LoginBloc(gh<_i1026.AuthRepository>()));
+    gh.factory<_i206.ProfileBloc>(
+        () => _i206.ProfileBloc(gh<_i1026.AuthRepository>()));
     return this;
   }
 }

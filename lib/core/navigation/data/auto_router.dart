@@ -23,7 +23,15 @@ class RootAutoRouter extends RootStackRouter {
   /// Routes are configured with their respective paths and pages
   @override
   List<AutoRoute> get routes => [
-        AutoRoute(path: '/login', page: LoginRoute.page, initial: true),
-        AutoRoute(path: '/counter', page: CounterRoute.page),
+        AutoRoute(path: '/login', page: LoginRoute.page),
+        AutoRoute(
+          initial: true,
+          path: '/',
+          page: AppShellRoute.page,
+          children: [
+            AutoRoute(path: 'counter', page: CounterRoute.page),
+            AutoRoute(path: 'profile', page: ProfileRoute.page),
+          ],
+        ),
       ];
 }
