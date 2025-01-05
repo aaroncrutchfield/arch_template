@@ -36,15 +36,16 @@ void main() {
     });
 
     group('error handling', () {
-      test('addError adds error to bloc', () {
-        final bloc = buildBloc();
-        final error = Exception('test error');
-        final stackTrace = StackTrace.current;
-
-        bloc.addError(error, stackTrace);
-
-        expect(bloc.state, equals(LoginInitial()));
-      });
+      blocTest<LoginBloc, LoginState>(
+        'handles errors properly',
+        build: buildBloc,
+        act: (bloc) => bloc.add(SignInWithGooglePressed()),
+        setUp: () {
+          when(() => authRepository.signInWithGoogle())
+              .thenThrow(Exception('test error'));
+        },
+        errors: () => [isA<Exception>()],
+      );
     });
 
     group('SignInWithGooglePressed', () {
@@ -66,7 +67,8 @@ void main() {
       );
 
       blocTest<LoginBloc, LoginState>(
-        'emits [LoginLoading, GoogleLoginFailure] when SignInWithGoogleException occurs',
+        'emits [LoginLoading, GoogleLoginFailure] when '
+        'SignInWithGoogleException occurs',
         setUp: () {
           when(() => authRepository.signInWithGoogle()).thenThrow(
             SignInWithGoogleException('error', StackTrace.current),
@@ -84,7 +86,8 @@ void main() {
       );
 
       blocTest<LoginBloc, LoginState>(
-        'emits [LoginLoading, GoogleLoginFailure] when generic exception occurs',
+        'emits [LoginLoading, GoogleLoginFailure] when generic '
+        'exception occurs',
         setUp: () {
           when(() => authRepository.signInWithGoogle())
               .thenThrow(Exception('error'));
@@ -131,7 +134,8 @@ void main() {
       );
 
       blocTest<LoginBloc, LoginState>(
-        'emits [LoginLoading, AppleLoginFailure] when SignInWithAppleException occurs',
+        'emits [LoginLoading, AppleLoginFailure] when '
+        'SignInWithAppleException occurs',
         setUp: () {
           when(() => authRepository.signInWithApple())
               .thenThrow(SignInWithAppleException('error', StackTrace.current));

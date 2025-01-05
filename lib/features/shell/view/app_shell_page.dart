@@ -1,5 +1,4 @@
 // coverage:ignore-file
-// TODO: Fix coverage issue
 
 import 'package:arch_template/core/navigation/data/auto_router.gr.dart';
 import 'package:arch_template/features/shell/widgets/widgets.dart';
