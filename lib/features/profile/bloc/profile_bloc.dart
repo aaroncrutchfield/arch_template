@@ -56,12 +56,10 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
   Future<void> _onProfileEditRequested(
     ProfileEditRequested event,
     Emitter<ProfileState> emit,
-  ) async {
-  }
+  ) async {}
 
   Future<void> _onProfileSettingsRequested(
     ProfileSettingsRequested event,
     Emitter<ProfileState> emit,
-  ) async {
-  }
+  ) async {}
 }
