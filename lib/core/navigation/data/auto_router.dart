@@ -16,7 +16,7 @@ class RootAutoRouter extends RootStackRouter {
   ///
   /// Uses an adaptive route type that adjusts based on the platform.
   @override
-  RouteType get defaultRouteType => const RouteType.cupertino();
+  RouteType get defaultRouteType => const RouteType.adaptive();
 
   /// Defines all available routes in the application.
   ///
@@ -29,7 +29,6 @@ class RootAutoRouter extends RootStackRouter {
           path: '/',
           page: AppShellRoute.page,
           children: [
-            // RedirectRoute(path: '/', redirectTo: 'counter'),
             AutoRoute(path: 'counter', page: CounterRoute.page),
             AutoRoute(path: 'profile', page: ProfileRoute.page),
           ],
