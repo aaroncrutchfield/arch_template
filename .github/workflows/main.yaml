@@ -21,6 +21,10 @@ jobs:
     uses: VeryGoodOpenSource/very_good_workflows/.github/workflows/flutter_package.yml@v1
     with:
       flutter_channel: stable
+      analyze_directories: |
+        lib/**
+        test/**
+        packages/**
       package_get_excludes: |
         tools/**
         tools/app_template/__brick__/**
