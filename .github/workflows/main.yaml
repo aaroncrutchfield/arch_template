@@ -21,7 +21,9 @@ jobs:
     uses: VeryGoodOpenSource/very_good_workflows/.github/workflows/flutter_package.yml@v1
     with:
       flutter_channel: stable
-      package_get_excludes: tools/app_template
+      package_get_excludes: |
+        tools/**
+        tools/app_template/__brick__/**
 
   spell-check:
     uses: VeryGoodOpenSource/very_good_workflows/.github/workflows/spell_check.yml@v1
