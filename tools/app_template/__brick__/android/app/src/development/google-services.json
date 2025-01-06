@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "994143003163",
+    "project_id": "apostletec-arch-template",
+    "storage_bucket": "apostletec-arch-template.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:994143003163:android:adc59180540db7246f4ebe",
+        "android_client_info": {
+          "package_name": "com.fluttermasterclass.{{project_name.snakeCase}}.dev"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "994143003163-pf2rgevo9dfp8gbus8lp36nvm7u8sjk5.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDyFIU0WBOXvICCKjOFVNMsi03UAsA3lVM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "994143003163-pf2rgevo9dfp8gbus8lp36nvm7u8sjk5.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

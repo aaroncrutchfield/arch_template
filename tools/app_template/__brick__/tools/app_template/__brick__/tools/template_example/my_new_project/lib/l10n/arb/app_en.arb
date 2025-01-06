@@ -1,0 +1,39 @@
+{
+    "@@locale": "en",
+    "counter": "Counter",
+    "@counter": {
+        "description": "Text shown in the AppBar of the Counter Page"
+    },
+    "signInWithGoogle": "Sign in with Google",
+    "@signInWithGoogle": {
+        "description": "Text shown when the Google Sign In button is pressed"
+    },
+    "signInWithApple": "Sign in with Apple",
+    "@signInWithApple": {
+        "description": "Text shown when the Apple Sign In button is pressed"
+    },
+    "signInWithGoogleFailed": "Google Sign In failed",
+    "@signInWithGoogleFailed": {
+        "description": "Text shown when the Google Sign In fails"
+    },
+    "signInWithAppleFailed": "Apple Sign In failed",
+    "@signInWithAppleFailed": {
+        "description": "Text shown when the Apple Sign In fails"
+    },
+    "profile": "Profile",
+    "@profile": {
+        "description": "Text shown in the AppBar of the Profile Page"
+    },
+    "noNameProvided": "No name provided",
+    "@noNameProvided": {
+        "description": "Text shown when the user has not provided a name"
+    },
+    "editProfile": "Edit Profile",
+    "@editProfile": {
+        "description": "Text shown in the Edit Profile Page"
+    },
+    "settings": "Settings",
+    "@settings": {
+        "description": "Text shown in the Settings Page"
+    }
+}
