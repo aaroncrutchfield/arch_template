@@ -26,8 +26,7 @@ jobs:
         test/**
         packages/**
       package_get_excludes: |
-        tools/**
-        tools/app_template/__brick__/**
+        __brick__
 
   spell-check:
     uses: VeryGoodOpenSource/very_good_workflows/.github/workflows/spell_check.yml@v1
