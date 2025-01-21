@@ -9,7 +9,7 @@ environment:
 dependencies:
   auth_repository:
     path: packages/auth_repository
-  auto_route: ^9.2.2
+  auto_route: ^9.3.0+1
   auto_route_generator: ^9.0.0
   bloc: ^8.1.4
   build_runner: ^2.4.13
