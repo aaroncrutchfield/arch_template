@@ -1,4 +1,4 @@
-name: arch_template
+name: {{project_name}}
 
 concurrency:
   group: $-$
@@ -21,8 +21,6 @@ jobs:
     uses: VeryGoodOpenSource/very_good_workflows/.github/workflows/flutter_package.yml@v1
     with:
       flutter_channel: stable
-      package_get_excludes: |
-        __brick__
 
   spell-check:
     uses: VeryGoodOpenSource/very_good_workflows/.github/workflows/spell_check.yml@v1
