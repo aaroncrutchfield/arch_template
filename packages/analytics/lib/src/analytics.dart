@@ -5,14 +5,6 @@ import 'package:firebase_analytics/firebase_analytics.dart';
 /// Interface for analytics implementations
 /// {@endtemplate}
 abstract class Analytics {
-  
-  // coverage:ignore-start
-  /// Factory constructor for [Analytics]. Be sure to initialize Firebase
-  /// before using this constructor.
-  ///
-  /// Returns an instance of [FirebaseAnalyticsService]
-  factory Analytics() => FirebaseAnalyticsService(FirebaseAnalytics.instance);
-  // coverage:ignore-end
 
   /// Tracks a named event with optional parameters
   Future<void> trackEvent(String name, {Map<String, Object>? parameters});
