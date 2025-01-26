@@ -1,5 +1,3 @@
-import 'package:analytics/src/firebase_analytics.dart';
-import 'package:firebase_analytics/firebase_analytics.dart';
 
 /// {@template analytics}
 /// Interface for analytics implementations
