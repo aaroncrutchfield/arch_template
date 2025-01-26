@@ -76,10 +76,10 @@ extension GetItInjectableX on _i174.GetIt {
           gh<_i1026.AuthRepository>(),
           gh<_i423.AppNavigation>(),
         ));
-    gh.factory<_i21.LoginBloc>(
-        () => _i21.LoginBloc(gh<_i1026.AuthRepository>()));
     gh.factory<_i206.ProfileBloc>(
         () => _i206.ProfileBloc(gh<_i1026.AuthRepository>()));
+    gh.factory<_i21.LoginBloc>(
+        () => _i21.LoginBloc(gh<_i1026.AuthRepository>()));
     return this;
   }
 }
