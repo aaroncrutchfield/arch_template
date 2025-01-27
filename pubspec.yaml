@@ -29,6 +29,7 @@ dependencies:
   intl: ^0.19.0
   analytics:
     path: packages/analytics
+  firebase_crashlytics: ^4.3.1
 
 dev_dependencies:
   bloc_test: ^10.0.0

@@ -17,6 +17,7 @@ class AutoRouteNavigation implements AppNavigation {
   /// The underlying router instance used for navigation.
   final RootAutoRouter _router;
 
+  // TODO(acrutchfield): Add navigation Observer from FirebaseAnalytics
   @override
   RouterConfig<Object> routerConfig() => _router.config();
 
