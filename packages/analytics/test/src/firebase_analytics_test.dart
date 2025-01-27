@@ -1,4 +1,3 @@
-import 'package:analytics/analytics.dart';
 import 'package:analytics/src/firebase_analytics.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter_test/flutter_test.dart';
