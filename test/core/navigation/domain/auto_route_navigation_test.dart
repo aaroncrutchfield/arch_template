@@ -21,7 +21,8 @@ void main() {
 
     group('routerConfig', () {
       test(
-          'should return router config from RootAutoRouter with provided observers',
+          'should return router config from RootAutoRouter '
+          'with provided observers',
           () {
         // Arrange
         final mockConfig = MockRouterConfig();
