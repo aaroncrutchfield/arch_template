@@ -17,7 +17,7 @@ class App extends StatelessWidget {
           value: appRegistry.get<AppNavigation>(),
         ),
         RepositoryProvider.value(
-          value: appRegistry.get<FirebaseAnalyticsObserver>(),    
+          value: appRegistry.get<FirebaseAnalyticsObserver>(),
         ),
       ],
       child: BlocProvider.value(

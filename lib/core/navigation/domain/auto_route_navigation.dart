@@ -20,9 +20,10 @@ class AutoRouteNavigation implements AppNavigation {
   @override
   RouterConfig<Object> routerConfig([
     List<NavigatorObserver>? navigatorObservers,
-  ]) => _router.config(
+  ]) =>
+      _router.config(
         navigatorObservers: () => navigatorObservers ?? const [],
-  );
+      );
 
   @override
   Future<void> navigateNamed(String name) => _router.navigateNamed(name);

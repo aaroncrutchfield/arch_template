@@ -39,5 +39,6 @@ abstract class FirebaseModule {
   @singleton
   FirebaseAnalyticsObserver getFirebaseAnalyticsObserver(
     FirebaseAnalytics analytics,
-  ) => FirebaseAnalyticsObserver(analytics: analytics);
+  ) =>
+      FirebaseAnalyticsObserver(analytics: analytics);
 }
