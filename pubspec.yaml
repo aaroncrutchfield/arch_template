@@ -29,7 +29,6 @@ dependencies:
   intl: ^0.19.0
   analytics:
     path: packages/analytics
-  logger: ^2.5.0
   firebase_crashlytics: ^4.3.1
 
 dev_dependencies:
