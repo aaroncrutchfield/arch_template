@@ -23,14 +23,23 @@ void main() {
       test('should return router config from RootAutoRouter', () {
         // Arrange
         final mockConfig = MockRouterConfig();
-        when(() => mockRouter.config()).thenReturn(mockConfig);
+        when(
+          () => mockRouter.config(
+            navigatorObservers: any(named: 'navigatorObservers'),
+          ),
+        ).thenReturn(mockConfig);
 
         // Act
-        final result = sut.routerConfig();
+        final observers = [NavigatorObserver()];
+        final result = sut.routerConfig(observers);
 
         // Assert
         expect(result, equals(mockConfig));
-        verify(() => mockRouter.config()).called(1);
+        verify(
+          () => mockRouter.config(
+            navigatorObservers: any(named: 'navigatorObservers'),
+          ),
+        ).called(1);
       });
     });
 
