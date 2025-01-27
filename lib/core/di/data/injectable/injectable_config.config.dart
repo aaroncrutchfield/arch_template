@@ -22,6 +22,7 @@ import 'package:arch_template/features/auth/bloc/auth_bloc.dart' as _i474;
 import 'package:arch_template/features/login/bloc/login_bloc.dart' as _i21;
 import 'package:arch_template/features/profile/bloc/profile_bloc.dart' as _i206;
 import 'package:auth_repository/auth_repository.dart' as _i1026;
+import 'package:firebase_analytics/firebase_analytics.dart' as _i398;
 import 'package:firebase_auth/firebase_auth.dart' as _i59;
 import 'package:firebase_core/firebase_core.dart' as _i982;
 import 'package:get_it/get_it.dart' as _i174;
@@ -70,6 +71,10 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.singleton<_i59.FirebaseAuth>(
         () => firebaseModule.getFirebaseAuth(gh<_i982.FirebaseApp>()));
+    gh.singleton<_i398.FirebaseAnalytics>(
+        () => firebaseModule.getFirebaseAnalytics(gh<_i982.FirebaseApp>()));
+    gh.singleton<_i398.FirebaseAnalyticsObserver>(() => firebaseModule
+        .getFirebaseAnalyticsObserver(gh<_i398.FirebaseAnalytics>()));
     gh.singleton<_i1026.AuthRepository>(
         () => packagesModule.getAuthRepository(gh<_i59.FirebaseAuth>()));
     gh.factory<_i474.AuthBloc>(() => _i474.AuthBloc(
