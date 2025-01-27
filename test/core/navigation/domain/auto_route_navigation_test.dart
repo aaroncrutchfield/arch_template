@@ -22,8 +22,7 @@ void main() {
     group('routerConfig', () {
       test(
           'should return router config from RootAutoRouter '
-          'with provided observers',
-          () {
+          'with provided observers', () {
         // Arrange
         final mockConfig = MockRouterConfig();
         final observers = [NavigatorObserver()];
