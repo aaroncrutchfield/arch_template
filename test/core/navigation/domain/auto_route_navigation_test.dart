@@ -20,17 +20,65 @@ void main() {
     });
 
     group('routerConfig', () {
-      test('should return router config from RootAutoRouter', () {
+      test(
+          'should return router config from RootAutoRouter '
+          'with provided observers', () {
         // Arrange
         final mockConfig = MockRouterConfig();
-        when(() => mockRouter.config()).thenReturn(mockConfig);
+        final observers = [NavigatorObserver()];
+        List<NavigatorObserver> Function()? capturedFunction;
+
+        when(
+          () => mockRouter.config(
+            navigatorObservers: any(named: 'navigatorObservers'),
+          ),
+        ).thenAnswer((invocation) {
+          capturedFunction = invocation.namedArguments[#navigatorObservers]
+              as List<NavigatorObserver> Function();
+          return mockConfig;
+        });
+
+        // Act
+        final result = sut.routerConfig(observers);
+
+        // Assert
+        expect(result, equals(mockConfig));
+        expect(capturedFunction?.call(), equals(observers));
+        verify(
+          () => mockRouter.config(
+            navigatorObservers: any(named: 'navigatorObservers'),
+          ),
+        ).called(1);
+      });
+
+      test(
+          'should return router config with empty observers when none provided',
+          () {
+        // Arrange
+        final mockConfig = MockRouterConfig();
+        List<NavigatorObserver> Function()? capturedFunction;
+
+        when(
+          () => mockRouter.config(
+            navigatorObservers: any(named: 'navigatorObservers'),
+          ),
+        ).thenAnswer((invocation) {
+          capturedFunction = invocation.namedArguments[#navigatorObservers]
+              as List<NavigatorObserver> Function();
+          return mockConfig;
+        });
 
         // Act
         final result = sut.routerConfig();
 
         // Assert
         expect(result, equals(mockConfig));
-        verify(() => mockRouter.config()).called(1);
+        expect(capturedFunction?.call(), isEmpty);
+        verify(
+          () => mockRouter.config(
+            navigatorObservers: any(named: 'navigatorObservers'),
+          ),
+        ).called(1);
       });
     });
 

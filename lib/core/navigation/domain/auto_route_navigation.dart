@@ -19,7 +19,12 @@ class AutoRouteNavigation implements AppNavigation {
 
   // TODO(acrutchfield): Add navigation Observer from FirebaseAnalytics
   @override
-  RouterConfig<Object> routerConfig() => _router.config();
+  RouterConfig<Object> routerConfig([
+    List<NavigatorObserver>? navigatorObservers,
+  ]) =>
+      _router.config(
+        navigatorObservers: () => navigatorObservers ?? const [],
+      );
 
   @override
   Future<void> navigateNamed(String name) => _router.navigateNamed(name);

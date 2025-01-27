@@ -10,7 +10,9 @@ abstract interface class AppNavigation {
   /// Returns the router configuration for the application.
   ///
   /// Used to set up the application's routing system at the root level.
-  RouterConfig<Object>? routerConfig();
+  RouterConfig<Object>? routerConfig([
+    List<NavigatorObserver>? navigatorObservers,
+  ]);
 
   /// Navigates to a route by its name.
   ///
