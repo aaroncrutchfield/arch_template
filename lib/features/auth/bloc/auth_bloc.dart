@@ -21,6 +21,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   final AuthRepository _authRepository;
   final AppNavigation _appNavigation;
 
+  // TODO(acrutchfield): Move navigation into the view layer
   Future<void> _onCheckAuthStateChanges(
     CheckAuthStateChanges event,
     Emitter<AuthState> emit,
