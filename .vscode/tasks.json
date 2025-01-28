@@ -1,0 +1,21 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "View Coverage Report",
+            "type": "shell",
+            "command": "genhtml coverage/lcov.info -o coverage/ && open coverage/index.html",
+            "windows": {
+                "command": "genhtml coverage/lcov.info -o coverage/ && start coverage/index.html"
+            },
+            "linux": {
+                "command": "genhtml coverage/lcov.info -o coverage/ && xdg-open coverage/index.html"
+            },
+            "presentation": {
+                "reveal": "never",
+                "panel": "shared"
+            },
+            "problemMatcher": []
+        }
+    ]
+}

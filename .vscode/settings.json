@@ -1,0 +1,8 @@
+{
+    "workbench.colorTheme": "Default Dark Modern",
+    "editor.formatOnSave": true,
+    "source.fixAll": true,
+    "dart.previewFlutterUiGuides": true,
+    "editor.stickyScroll.enabled": true,
+    "atlascode.bitbucket.enabled": false,
+}
