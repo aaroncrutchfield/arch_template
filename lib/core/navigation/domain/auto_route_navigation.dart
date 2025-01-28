@@ -26,6 +26,12 @@ class AutoRouteNavigation implements AppNavigation {
         navigatorObservers: () => navigatorObservers ?? const [],
       );
 
+  /// Returns the navigator key for the application.
+  ///
+  /// Used to get the navigator key for the application.
+  @override
+  GlobalKey<NavigatorState> get navigatorKey => _router.navigatorKey;
+
   @override
   Future<void> navigateNamed(String name) => _router.navigateNamed(name);
 

@@ -1,3 +1,5 @@
+import 'dart:io' show Platform;
+
 import 'package:arch_template/core/di/app_registry.dart';
 import 'package:arch_template/core/navigation/navigation.dart';
 import 'package:arch_template/features/auth/bloc/auth_bloc.dart';
@@ -5,6 +7,7 @@ import 'package:arch_template/l10n/l10n.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:upgrader/upgrader.dart';
 
 class App extends StatelessWidget {
   const App({super.key});
@@ -48,6 +51,14 @@ class AppView extends StatelessWidget {
       ),
       localizationsDelegates: AppLocalizations.localizationsDelegates,
       supportedLocales: AppLocalizations.supportedLocales,
+      builder: (context, child) => UpgradeAlert(
+        dialogStyle: Platform.isIOS
+            ? UpgradeDialogStyle.cupertino
+            : UpgradeDialogStyle.material,
+        navigatorKey: navigation.navigatorKey,
+        upgrader: Upgrader(),
+        child: child,
+      ),
     );
   }
 }

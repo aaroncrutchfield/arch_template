@@ -7,6 +7,11 @@ import 'package:flutter/widgets.dart';
 /// navigation solutions,
 /// making it easier to switch between different routing implementations.
 abstract interface class AppNavigation {
+  /// Returns the navigator key for the application.
+  ///
+  /// Used to get the navigator key for the application.
+  GlobalKey<NavigatorState> get navigatorKey;
+
   /// Returns the router configuration for the application.
   ///
   /// Used to set up the application's routing system at the root level.
