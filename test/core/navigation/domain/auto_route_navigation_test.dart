@@ -218,5 +218,20 @@ void main() {
         verify(() => mockRouter.replaceNamed(routeName)).called(1);
       });
     });
+
+    group('navigatorKey', () {
+      test('returns router navigatorKey', () {
+        // Arrange
+        final expectedKey = GlobalKey<NavigatorState>();
+        when(() => mockRouter.navigatorKey).thenReturn(expectedKey);
+
+        // Act
+        final result = sut.navigatorKey;
+
+        // Assert
+        expect(result, equals(expectedKey));
+        verify(() => mockRouter.navigatorKey).called(1);
+      });
+    });
   });
 }
