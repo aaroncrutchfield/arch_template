@@ -1,0 +1,8 @@
+#!/bin/sh
+
+# Run melos bootstrap before commit
+echo "Running melos bootstrap..."
+if ! melos bootstrap; then
+    echo "Error: melos bootstrap failed"
+    exit 1
+fi 
