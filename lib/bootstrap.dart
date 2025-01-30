@@ -12,6 +12,14 @@ class AppBlocObserver extends BlocObserver {
   const AppBlocObserver();
 
   @override
+  void onEvent(Bloc bloc, Object? event) {
+    final message = 'onEvent(${bloc.runtimeType})\n$event';
+    log(message);
+    FirebaseCrashlytics.instance.log(message);
+    super.onEvent(bloc, event);
+  }
+
+  @override
   void onChange(BlocBase<dynamic> bloc, Change<dynamic> change) {
     super.onChange(bloc, change);
     final message = 'onChange(${bloc.runtimeType})\n$change';
@@ -40,6 +48,7 @@ Future<void> bootstrap({
 }) async {
   FlutterError.onError = (details) {
     log(details.exceptionAsString(), stackTrace: details.stack);
+    FirebaseCrashlytics.instance.recordFlutterError(details);
   };
 
   WidgetsFlutterBinding.ensureInitialized();
