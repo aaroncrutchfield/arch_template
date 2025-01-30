@@ -36,10 +36,12 @@ void main() {
 
       // Setup default behavior for analytics methods
       when(() => mockAnalytics.identifyUser(any())).thenAnswer((_) async {});
-      when(() => mockAnalytics.trackEvent(
-            any(),
-            parameters: any(named: 'parameters'),
-          )).thenAnswer((_) async {});
+      when(
+        () => mockAnalytics.trackEvent(
+          any(),
+          parameters: any(named: 'parameters'),
+        ),
+      ).thenAnswer((_) async {});
     });
 
     AuthBloc createBloc() => AuthBloc(
@@ -152,7 +154,8 @@ void main() {
 
     group('analytics tracking', () {
       blocTest<AuthBloc, AuthState>(
-        'tracks login and identifies user when auth state changes to authenticated',
+        'tracks login and identifies user when auth state '
+        'changes to authenticated',
         setUp: () {
           when(() => authUser.id).thenReturn('test-user-id');
           when(() => authRepository.authStateChanges())

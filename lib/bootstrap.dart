@@ -12,7 +12,7 @@ class AppBlocObserver extends BlocObserver {
   const AppBlocObserver();
 
   @override
-  void onEvent(Bloc bloc, Object? event) {
+  void onEvent(Bloc<dynamic, dynamic> bloc, Object? event) {
     final message = 'onEvent(${bloc.runtimeType})\n$event';
     log(message);
     FirebaseCrashlytics.instance.log(message);
