@@ -8,6 +8,7 @@
 // coverage:ignore-file
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
+import 'package:analytics/analytics.dart' as _i548;
 import 'package:arch_template/core/di/data/modules/firebase_module.dart'
     as _i19;
 import 'package:arch_template/core/di/data/modules/packages_module.dart'
@@ -73,6 +74,8 @@ extension GetItInjectableX on _i174.GetIt {
         () => firebaseModule.getFirebaseAuth(gh<_i982.FirebaseApp>()));
     gh.singleton<_i398.FirebaseAnalytics>(
         () => firebaseModule.getFirebaseAnalytics(gh<_i982.FirebaseApp>()));
+    gh.singleton<_i548.Analytics>(
+        () => packagesModule.getAnalytics(gh<_i398.FirebaseAnalytics>()));
     gh.singleton<_i398.FirebaseAnalyticsObserver>(() => firebaseModule
         .getFirebaseAnalyticsObserver(gh<_i398.FirebaseAnalytics>()));
     gh.singleton<_i1026.AuthRepository>(
@@ -80,6 +83,7 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i474.AuthBloc>(() => _i474.AuthBloc(
           gh<_i1026.AuthRepository>(),
           gh<_i423.AppNavigation>(),
+          gh<_i548.Analytics>(),
         ));
     gh.factory<_i206.ProfileBloc>(
         () => _i206.ProfileBloc(gh<_i1026.AuthRepository>()));

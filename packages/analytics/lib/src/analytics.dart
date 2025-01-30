@@ -1,8 +1,14 @@
+// coverage:ignore-file
+import 'package:analytics/src/firebase_analytics.dart';
+import 'package:firebase_analytics/firebase_analytics.dart';
 
 /// {@template analytics}
 /// Interface for analytics implementations
 /// {@endtemplate}
 abstract class Analytics {
+  /// {@macro analytics}
+  factory Analytics(FirebaseAnalytics analytics) =>
+      FirebaseAnalyticsService(analytics);
 
   /// Tracks a named event with optional parameters
   Future<void> trackEvent(String name, {Map<String, Object>? parameters});

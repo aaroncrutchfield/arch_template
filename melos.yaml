@@ -3,3 +3,40 @@ name: arch_template
 packages:
   - ./
   - packages/**
+
+scripts:
+  # Clean generated files
+  clean:
+    run: |
+      melos exec -c 1 --fail-fast -- "flutter clean"
+      melos exec -c 1 --fail-fast -- "dart run build_runner clean"
+    description: Clean all generated files
+
+  # Generate code in all packages
+  generate:
+    run: melos exec -c 1 --fail-fast --depends-on="build_runner" -- "dart run build_runner build --delete-conflicting-outputs"
+    description: Generate code in all packages
+
+  # Format all files
+  format:
+    run: melos exec -c 1 --fail-fast -- "dart format . --fix"
+    description: Format all files
+
+  # Fix common issues
+  fix:
+    run: |
+      melos exec -c 1 --fail-fast -- "dart fix --apply"
+    description: Fix common issues automatically
+
+  # Run analyzer
+  analyze:
+    run: melos exec -c 1 --fail-fast -- "flutter analyze ."
+    description: Run analyzer in all packages
+
+command:
+  bootstrap:
+    hooks:
+      post: |
+        melos run fix
+        melos run format
+        melos run analyze

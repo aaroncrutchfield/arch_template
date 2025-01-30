@@ -1,6 +1,7 @@
 import 'dart:io';
-import 'package:path/path.dart' as path;
+
 import 'package:args/args.dart';
+import 'package:path/path.dart' as path;
 
 void main(List<String> args) async {
   final parser = ArgParser()

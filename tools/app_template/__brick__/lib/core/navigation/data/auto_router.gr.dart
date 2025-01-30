@@ -8,10 +8,14 @@
 // coverage:ignore-file
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'package:{{project_name.snakeCase}}/counter/view/counter_page.dart' as _i2;
-import 'package:{{project_name.snakeCase}}/features/login/view/login_page.dart' as _i3;
-import 'package:{{project_name.snakeCase}}/features/profile/view/profile_page.dart' as _i4;
-import 'package:{{project_name.snakeCase}}/features/shell/view/app_shell_page.dart' as _i1;
+import 'package:{{project_name.snakeCase}}/counter/view/counter_page.dart'
+    as _i2;
+import 'package:{{project_name.snakeCase}}/features/login/view/login_page.dart'
+    as _i3;
+import 'package:{{project_name.snakeCase}}/features/profile/view/profile_page.dart'
+    as _i4;
+import 'package:{{project_name.snakeCase}}/features/shell/view/app_shell_page.dart'
+    as _i1;
 import 'package:auto_route/auto_route.dart' as _i5;
 
 /// generated route for

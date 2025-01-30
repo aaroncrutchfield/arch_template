@@ -12,15 +12,20 @@ import 'package:{{project_name.snakeCase}}/core/di/data/modules/firebase_module.
     as _i19;
 import 'package:{{project_name.snakeCase}}/core/di/data/modules/packages_module.dart'
     as _i370;
-import 'package:{{project_name.snakeCase}}/core/navigation/data/auto_router.dart' as _i34;
+import 'package:{{project_name.snakeCase}}/core/navigation/data/auto_router.dart'
+    as _i34;
 import 'package:{{project_name.snakeCase}}/core/navigation/domain/app_navigation.dart'
     as _i1032;
 import 'package:{{project_name.snakeCase}}/core/navigation/domain/auto_route_navigation.dart'
     as _i800;
-import 'package:{{project_name.snakeCase}}/core/navigation/navigation.dart' as _i423;
-import 'package:{{project_name.snakeCase}}/features/auth/bloc/auth_bloc.dart' as _i474;
-import 'package:{{project_name.snakeCase}}/features/login/bloc/login_bloc.dart' as _i21;
-import 'package:{{project_name.snakeCase}}/features/profile/bloc/profile_bloc.dart' as _i206;
+import 'package:{{project_name.snakeCase}}/core/navigation/navigation.dart'
+    as _i423;
+import 'package:{{project_name.snakeCase}}/features/auth/bloc/auth_bloc.dart'
+    as _i474;
+import 'package:{{project_name.snakeCase}}/features/login/bloc/login_bloc.dart'
+    as _i21;
+import 'package:{{project_name.snakeCase}}/features/profile/bloc/profile_bloc.dart'
+    as _i206;
 import 'package:auth_repository/auth_repository.dart' as _i1026;
 import 'package:firebase_auth/firebase_auth.dart' as _i59;
 import 'package:firebase_core/firebase_core.dart' as _i982;

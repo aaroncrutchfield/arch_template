@@ -1,3 +1,4 @@
+import 'package:analytics/analytics.dart';
 import 'package:arch_template/core/navigation/navigation.dart';
 import 'package:arch_template/features/auth/bloc/auth_bloc.dart';
 import 'package:auth_repository/auth_repository.dart';
@@ -11,25 +12,47 @@ class MockAppNavigation extends Mock implements AppNavigation {}
 
 class MockAuthUser extends Mock implements AuthUser {}
 
+class MockAnalytics extends Mock implements Analytics {}
+
 void main() {
   group('AuthBloc', () {
     late AuthRepository authRepository;
     late AppNavigation appNavigation;
     late AuthUser authUser;
+    late Analytics mockAnalytics;
 
     setUp(() {
       authRepository = MockAuthRepository();
       appNavigation = MockAppNavigation();
       authUser = MockAuthUser();
+      mockAnalytics = MockAnalytics();
+
+      // Setup default behavior for authUser
+      when(() => authUser.id).thenReturn('test-user-id');
 
       // Setup default behavior for authStateChanges
       when(() => authRepository.authStateChanges())
           .thenAnswer((_) => Stream.value(null));
+
+      // Setup default behavior for analytics methods
+      when(() => mockAnalytics.identifyUser(any())).thenAnswer((_) async {});
+      when(
+        () => mockAnalytics.trackEvent(
+          any(),
+          parameters: any(named: 'parameters'),
+        ),
+      ).thenAnswer((_) async {});
     });
+
+    AuthBloc createBloc() => AuthBloc(
+          authRepository,
+          appNavigation,
+          mockAnalytics,
+        );
 
     test('initial state is AuthInitial', () {
       expect(
-        AuthBloc(authRepository, appNavigation).state,
+        createBloc().state,
         equals(AuthInitial()),
       );
     });
@@ -43,7 +66,7 @@ void main() {
           when(() => appNavigation.replaceNamed('/counter'))
               .thenAnswer((_) async {});
         },
-        build: () => AuthBloc(authRepository, appNavigation),
+        build: createBloc,
         verify: (_) {
           verify(() => authRepository.authStateChanges()).called(1);
           verify(() => appNavigation.replaceNamed('/counter')).called(1);
@@ -59,7 +82,7 @@ void main() {
           when(() => appNavigation.replaceNamed('/login'))
               .thenAnswer((_) async {});
         },
-        build: () => AuthBloc(authRepository, appNavigation),
+        build: createBloc,
         verify: (_) {
           verify(() => authRepository.authStateChanges()).called(1);
           verify(() => appNavigation.replaceNamed('/login')).called(1);
@@ -76,7 +99,7 @@ void main() {
           when(() => appNavigation.replaceNamed(any()))
               .thenAnswer((_) async {});
         },
-        build: () => AuthBloc(authRepository, appNavigation),
+        build: createBloc,
         verify: (_) {
           verify(() => authRepository.authStateChanges()).called(1);
           verify(() => appNavigation.replaceNamed('/login')).called(2);
@@ -96,7 +119,7 @@ void main() {
             when(() => appNavigation.replaceNamed('/login'))
                 .thenAnswer((_) async {});
           },
-          build: () => AuthBloc(authRepository, appNavigation),
+          build: createBloc,
           expect: () => [
             AuthFailure(testError.toString()),
           ],
@@ -115,7 +138,7 @@ void main() {
             when(() => appNavigation.replaceNamed('/login'))
                 .thenAnswer((_) async {});
           },
-          build: () => AuthBloc(authRepository, appNavigation),
+          build: createBloc,
           expect: () => [
             AuthFailure(testError.toString()),
           ],
@@ -127,6 +150,39 @@ void main() {
           errors: () => [testError],
         );
       });
+    });
+
+    group('analytics tracking', () {
+      blocTest<AuthBloc, AuthState>(
+        'tracks login and identifies user when auth state '
+        'changes to authenticated',
+        setUp: () {
+          when(() => authUser.id).thenReturn('test-user-id');
+          when(() => authRepository.authStateChanges())
+              .thenAnswer((_) => Stream.value(authUser));
+          when(() => appNavigation.replaceNamed('/counter'))
+              .thenAnswer((_) async {});
+        },
+        build: createBloc,
+        verify: (_) {
+          verify(() => mockAnalytics.identifyUser('test-user-id')).called(1);
+          verify(() => mockAnalytics.trackEvent('login')).called(1);
+        },
+      );
+
+      blocTest<AuthBloc, AuthState>(
+        'tracks logout when auth state changes to unauthenticated',
+        setUp: () {
+          when(() => authRepository.authStateChanges())
+              .thenAnswer((_) => Stream.value(null));
+          when(() => appNavigation.replaceNamed('/login'))
+              .thenAnswer((_) async {});
+        },
+        build: createBloc,
+        verify: (_) {
+          verify(() => mockAnalytics.trackEvent('logout')).called(1);
+        },
+      );
     });
   });
 }
