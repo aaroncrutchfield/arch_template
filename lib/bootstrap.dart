@@ -62,7 +62,6 @@ Future<void> bootstrap({
   final pushNotifications = appRegistry.get<PushNotifications>();
   final token = await pushNotifications.getToken();
 
-  
   debugPrint('FCM Token: $token');
 
   // Add cross-flavor configuration here
