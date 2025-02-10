@@ -45,8 +45,10 @@ abstract class FirebaseModule {
       FirebaseAnalyticsObserver(analytics: analytics);
 
   @singleton
-  FirebaseMessaging getFirebaseMessaging() => FirebaseMessaging.instance;
+  FirebaseMessaging getFirebaseMessaging(FirebaseApp app) =>
+      FirebaseMessaging.instance;
 
   @singleton
-  FirebaseCrashlytics getFirebaseCrashlytics() => FirebaseCrashlytics.instance;
+  FirebaseCrashlytics getFirebaseCrashlytics(FirebaseApp app) =>
+      FirebaseCrashlytics.instance;
 }

@@ -51,11 +51,11 @@ class DefaultFirebaseOptions {
   );
 
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyDyFIU0WBOXvICCKjOFVNMsi03UAsA3lVM',
-    appId: '1:994143003163:android:adc59180540db7246f4ebe',
-    messagingSenderId: '994143003163',
-    projectId: 'apostletec-arch-template',
-    storageBucket: 'apostletec-arch-template.firebasestorage.app',
+    apiKey: 'AIzaSyAK9lfmOz-Dl4IA4PJZ9UfF4NhrKICaC5s',
+    appId: '1:138327895433:android:04b4501858e78c54ac8558',
+    messagingSenderId: '138327895433',
+    projectId: 'fm-arch-template-dev',
+    storageBucket: 'fm-arch-template-dev.firebasestorage.app',
   );
 
   static const FirebaseOptions ios = FirebaseOptions(
