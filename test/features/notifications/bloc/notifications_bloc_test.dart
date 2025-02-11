@@ -1,6 +1,5 @@
 import 'package:arch_template/core/notifications/push/push_notifications.dart';
 import 'package:arch_template/features/notifications/bloc/notifications_bloc.dart';
-import 'package:arch_template/features/notifications/models/app_notification.dart';
 import 'package:bloc_test/bloc_test.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter_test/flutter_test.dart';

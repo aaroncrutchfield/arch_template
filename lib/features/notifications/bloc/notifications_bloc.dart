@@ -99,16 +99,16 @@ class NotificationsBloc extends Bloc<NotificationsEvent, NotificationsState> {
   }
 
   NotificationsState _onMessageError(Object error, StackTrace stackTrace) {
-      addError(error, stackTrace);
-      return state.copyWith(error: error);
-    }
+    addError(error, stackTrace);
+    return state.copyWith(error: error);
+  }
 
   NotificationsState _onNewMessage(RemoteMessage message) {
-      final notification = AppNotification.fromRemoteMessage(message);
-      return state.copyWith(
-        notifications: state.notifications + [notification],
-      );
-    }
+    final notification = AppNotification.fromRemoteMessage(message);
+    return state.copyWith(
+      notifications: state.notifications + [notification],
+    );
+  }
 
   Future<void> _onSubscribeToBackgroundMessages(
     _SubscribeToBackgroundMessages event,
