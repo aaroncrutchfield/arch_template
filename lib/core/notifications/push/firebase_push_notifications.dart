@@ -1,7 +1,8 @@
 import 'dart:async';
-import 'dart:io';
 
+import 'package:arch_template/core/notifications/push/firebase_messaging_wrapper.dart';
 import 'package:arch_template/core/notifications/push/push_notifications.dart';
+import 'package:arch_template/core/platform/capability.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/foundation.dart';
@@ -12,41 +13,40 @@ import 'package:injectable/injectable.dart';
 class FirebasePushNotifications implements PushNotifications {
   /// {@macro firebase_push_notifications}
   FirebasePushNotifications(
-    this._messaging,
+    this._messagingClient,
     this._crashlytics,
+    this._capability,
   );
 
-  final FirebaseMessaging _messaging;
+  final FirebaseMessagingWrapper _messagingClient;
   final FirebaseCrashlytics _crashlytics;
-
+  final Capability _capability;
   void _reportError(Object error, StackTrace stackTrace) {
     unawaited(_crashlytics.recordError(error, stackTrace));
   }
 
   @override
-  Stream<RemoteMessage> get onForegroundMessage => FirebaseMessaging.onMessage;
+  Stream<RemoteMessage> get onForegroundMessage => _messagingClient.onMessage;
 
   @override
   Stream<RemoteMessage?> get onInitialMessage async* {
     try {
-      final initialMessage = await _messaging.getInitialMessage();
-      if (initialMessage != null) {
-        yield initialMessage;
-      }
+      yield await _messagingClient.getInitialMessage();
     } catch (e, stackTrace) {
       _reportError(e, stackTrace);
       debugPrint('Error getting initial message: $e');
+      rethrow;
     }
   }
 
   @override
   Stream<RemoteMessage> get onBackgroundMessage =>
-      FirebaseMessaging.onMessageOpenedApp;
+      _messagingClient.onMessageOpenedApp;
 
   @override
   Future<bool> requestPermissions() async {
     try {
-      final settings = await _messaging.requestPermission(
+      final settings = await _messagingClient.requestPermission(
         provisional: true, // Allow provisional permissions on iOS
       );
       return settings.authorizationStatus == AuthorizationStatus.authorized ||
@@ -62,15 +62,15 @@ class FirebasePushNotifications implements PushNotifications {
   Future<String?> getToken() async {
     try {
       // For apple platforms, ensure the APNS token is available
-      if (Platform.isIOS) {
-        final apnsToken = await _messaging.getAPNSToken();
+      if (_capability.requireApnsToken()) {
+        final apnsToken = await _messagingClient.getAPNSToken();
         if (apnsToken == null) {
           debugPrint('APNS token not available yet');
           return null;
         }
       }
 
-      return await _messaging.getToken();
+      return await _messagingClient.getToken();
     } catch (e, stackTrace) {
       _reportError(e, stackTrace);
       debugPrint('Error getting FCM token: $e');
@@ -81,7 +81,7 @@ class FirebasePushNotifications implements PushNotifications {
   @override
   Future<void> subscribeToTopic(String topic) async {
     try {
-      await _messaging.subscribeToTopic(topic);
+      await _messagingClient.subscribeToTopic(topic);
     } catch (e, stackTrace) {
       _reportError(e, stackTrace);
       debugPrint('Error subscribing to topic: $e');
@@ -91,7 +91,7 @@ class FirebasePushNotifications implements PushNotifications {
   @override
   Future<void> unsubscribeFromTopic(String topic) async {
     try {
-      await _messaging.unsubscribeFromTopic(topic);
+      await _messagingClient.unsubscribeFromTopic(topic);
     } catch (e, stackTrace) {
       _reportError(e, stackTrace);
       debugPrint('Error unsubscribing from topic: $e');
@@ -101,7 +101,7 @@ class FirebasePushNotifications implements PushNotifications {
   @override
   Future<void> deleteToken() async {
     try {
-      await _messaging.deleteToken();
+      await _messagingClient.deleteToken();
     } catch (e, stackTrace) {
       _reportError(e, stackTrace);
       debugPrint('Error deleting FCM token: $e');

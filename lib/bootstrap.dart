@@ -59,11 +59,6 @@ Future<void> bootstrap({
   await appRegistry.init(environment);
   Bloc.observer = const AppBlocObserver();
 
-  final pushNotifications = appRegistry.get<PushNotifications>();
-  final token = await pushNotifications.getToken();
-
-  debugPrint('FCM Token: $token');
-
   // Add cross-flavor configuration here
   FirebaseMessaging.onBackgroundMessage(devFirebaseMessagingBackgroundHandler);
 

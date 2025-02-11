@@ -29,6 +29,7 @@ import 'package:arch_template/core/notifications/push/firebase_push_notification
     as _i362;
 import 'package:arch_template/core/notifications/push/push_notifications.dart'
     as _i371;
+import 'package:arch_template/core/platform/capability.dart' as _i717;
 import 'package:arch_template/features/auth/bloc/auth_bloc.dart' as _i474;
 import 'package:arch_template/features/login/bloc/login_bloc.dart' as _i21;
 import 'package:arch_template/features/notifications/bloc/notifications_bloc.dart'
@@ -65,6 +66,7 @@ extension GetItInjectableX on _i174.GetIt {
     gh.singleton<_i163.FlutterLocalNotificationsPlugin>(
         () => packagesModule.getFlutterLocalNotificationsPlugin());
     gh.singleton<_i34.RootAutoRouter>(() => _i34.RootAutoRouter());
+    gh.singleton<_i717.Capability>(() => _i717.Capability());
     gh.singleton<_i1032.AppNavigation>(
         () => _i800.AutoRouteNavigation(gh<_i34.RootAutoRouter>()));
     gh.singleton<_i982.FirebaseOptions>(
@@ -108,6 +110,7 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i371.PushNotifications>(() => _i362.FirebasePushNotifications(
           gh<_i892.FirebaseMessaging>(),
           gh<_i141.FirebaseCrashlytics>(),
+          gh<_i717.Capability>(),
         ));
     gh.singleton<_i1026.AuthRepository>(
         () => packagesModule.getAuthRepository(gh<_i59.FirebaseAuth>()));
