@@ -18,7 +18,7 @@ void main() {
 
   group('FirebaseMessagingWrapper', () {
     test('getInitialMessage delegates to messaging', () async {
-      final message = RemoteMessage();
+      const message = RemoteMessage();
       when(() => messaging.getInitialMessage())
           .thenAnswer((_) async => message);
 

@@ -25,6 +25,8 @@ import 'package:arch_template/core/notifications/local/flutter_local_notificatio
     as _i176;
 import 'package:arch_template/core/notifications/local/local_notifications.dart'
     as _i794;
+import 'package:arch_template/core/notifications/push/firebase_messaging_wrapper.dart'
+    as _i283;
 import 'package:arch_template/core/notifications/push/firebase_push_notifications.dart'
     as _i362;
 import 'package:arch_template/core/notifications/push/push_notifications.dart'
@@ -107,8 +109,10 @@ extension GetItInjectableX on _i174.GetIt {
         () => packagesModule.getAnalytics(gh<_i398.FirebaseAnalytics>()));
     gh.singleton<_i398.FirebaseAnalyticsObserver>(() => firebaseModule
         .getFirebaseAnalyticsObserver(gh<_i398.FirebaseAnalytics>()));
+    gh.factory<_i283.FirebaseMessagingWrapper>(
+        () => _i283.FirebaseMessagingWrapper(gh<_i892.FirebaseMessaging>()));
     gh.factory<_i371.PushNotifications>(() => _i362.FirebasePushNotifications(
-          gh<_i892.FirebaseMessaging>(),
+          gh<_i283.FirebaseMessagingWrapper>(),
           gh<_i141.FirebaseCrashlytics>(),
           gh<_i717.Capability>(),
         ));
