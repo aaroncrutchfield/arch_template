@@ -63,10 +63,8 @@ extension GetItInjectableX on _i174.GetIt {
       environment,
       environmentFilter,
     );
-    final packagesModule = _$PackagesModule();
     final firebaseModule = _$FirebaseModule();
-    gh.singleton<_i163.FlutterLocalNotificationsPlugin>(
-        () => packagesModule.getFlutterLocalNotificationsPlugin());
+    final packagesModule = _$PackagesModule();
     gh.singleton<_i34.RootAutoRouter>(() => _i34.RootAutoRouter());
     gh.singleton<_i717.Capability>(() => _i717.Capability());
     gh.singleton<_i1032.AppNavigation>(
@@ -133,6 +131,6 @@ extension GetItInjectableX on _i174.GetIt {
   }
 }
 
-class _$PackagesModule extends _i370.PackagesModule {}
-
 class _$FirebaseModule extends _i19.FirebaseModule {}
+
+class _$PackagesModule extends _i370.PackagesModule {}
