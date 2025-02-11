@@ -1,3 +1,4 @@
+// coverage:ignore-file
 import 'package:arch_template/core/notifications/handlers/notification_handlers.dart';
 import 'package:arch_template/core/notifications/local/flutter_local_notifications.dart';
 import 'package:arch_template/firebase/firebase_options_dev.dart' as dev;
