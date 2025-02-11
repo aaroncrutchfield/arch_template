@@ -19,4 +19,7 @@ abstract interface class LocalNotifications {
 
   /// Cancel all notifications
   Future<void> cancelAll();
+
+  /// Dispose the local notifications service
+  void dispose();
 }
