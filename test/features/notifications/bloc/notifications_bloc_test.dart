@@ -1,5 +1,6 @@
 import 'package:arch_template/core/notifications/push/push_notifications.dart';
 import 'package:arch_template/features/notifications/bloc/notifications_bloc.dart';
+import 'package:arch_template/features/notifications/models/app_notification.dart';
 import 'package:bloc_test/bloc_test.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -114,14 +115,24 @@ void main() {
             fcmToken: 'test-token',
             permissionStatus: NotificationPermissionStatus.granted,
           ),
-          predicate<NotificationsState>((state) {
-            final notification = state.notifications.first;
-            return state.notifications.length == 1 &&
-                notification.id == 'test-id' &&
-                notification.title == 'Test Title' &&
-                notification.body == 'Test Body' &&
-                notification.payload?['key'] == 'value';
-          }),
+          const NotificationsState(
+            notifications: [
+              AppNotification(
+                id: 'test-id',
+                title: 'Test Title',
+                body: 'Test Body',
+                payload: {'key': 'value'},
+              ),
+            ],
+            lastNotification: AppNotification(
+              id: 'test-id',
+              title: 'Test Title',
+              body: 'Test Body',
+              payload: {'key': 'value'},
+            ),
+            fcmToken: 'test-token',
+            permissionStatus: NotificationPermissionStatus.granted,
+          ),
         ],
       );
 
@@ -148,7 +159,8 @@ void main() {
                 notification.id == 'test-id' &&
                 notification.title == 'Test Title' &&
                 notification.body == 'Test Body' &&
-                notification.payload?['key'] == 'value';
+                notification.payload?['key'] == 'value' &&
+                state.lastNotification == notification;
           }),
         ],
       );
@@ -176,7 +188,8 @@ void main() {
                 notification.id == 'test-id' &&
                 notification.title == 'Test Title' &&
                 notification.body == 'Test Body' &&
-                notification.payload?['key'] == 'value';
+                notification.payload?['key'] == 'value' &&
+                state.lastNotification == notification;
           }),
         ],
       );

@@ -45,6 +45,10 @@ configure_firebase() {
     flutterfire config \
       --project=${PROJECT_ID}${project_suffix} \
       --out=lib/firebase/firebase_options${file_suffix}.dart \
+      --ios-bundle-id=${IOS_ID}${bundle_suffix} \
+      --macos-bundle-id=${IOS_ID}${bundle_suffix} \
+      --ios-out=ios/${env}/GoogleService-Info.plist \
+      --macos-out=macos/${env}/GoogleService-Info.plist \
       --android-package-name=${ANDROID_ID}${bundle_suffix} \
       --android-out=android/app/src/${env}/google-services.json
 }
