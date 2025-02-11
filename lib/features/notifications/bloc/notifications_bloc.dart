@@ -19,23 +19,25 @@ class NotificationsBloc extends Bloc<NotificationsEvent, NotificationsState> {
   NotificationsBloc(this._pushNotifications)
       : super(const NotificationsState()) {
     on<NotificationsInitialized>(_onInitialized);
-    on<NotificationReceived>(_onNotificationReceived);
     on<NotificationPermissionRequested>(_onPermissionRequested);
+
+    on<_SubscribeToInitialMessages>(_onSubscribeToInitialMessages);
+    on<_SubscribeToForegroundMessages>(_onSubscribeToForegroundMessages);
+    on<_SubscribeToBackgroundMessages>(_onSubscribeToBackgroundMessages);
 
     add(const NotificationsInitialized());
   }
 
   final PushNotifications _pushNotifications;
-  StreamSubscription<RemoteMessage>? _foregroundSubscription;
-  StreamSubscription<RemoteMessage>? _backgroundSubscription;
-  StreamSubscription<RemoteMessage?>? _initialMessageSubscription;
 
   Future<void> _onInitialized(
     NotificationsInitialized event,
     Emitter<NotificationsState> emit,
   ) async {
     try {
-      await _setupNotificationStreams();
+      add(const _SubscribeToInitialMessages());
+      add(const _SubscribeToForegroundMessages());
+      add(const _SubscribeToBackgroundMessages());
 
       final hasPermission = await _pushNotifications.requestPermissions();
       if (hasPermission) {
@@ -64,28 +66,59 @@ class NotificationsBloc extends Bloc<NotificationsEvent, NotificationsState> {
     }
   }
 
-  Future<void> _onNotificationReceived(
-    NotificationReceived event,
+  Future<void> _onSubscribeToInitialMessages(
+    _SubscribeToInitialMessages event,
     Emitter<NotificationsState> emit,
   ) async {
-    try {
-      final notification = AppNotification(
-        id: event.message.messageId ?? '',
-        title: event.message.notification?.title ?? '',
-        body: event.message.notification?.body ?? '',
-        payload: event.message.data,
-      );
+    await emit.forEach<RemoteMessage?>(
+      _pushNotifications.onInitialMessage,
+      onData: (message) {
+        if (message != null) {
+          final notification = AppNotification.fromRemoteMessage(message);
+          return state.copyWith(
+            notifications: state.notifications + [notification],
+            lastNotification: notification,
+          );
+        } else {
+          return state;
+        }
+      },
+      onError: _onMessageError,
+    );
+  }
 
-      emit(
-        state.copyWith(
-          notifications: [...state.notifications, notification],
-          lastNotification: notification,
-        ),
-      );
-    } catch (error, stackTrace) {
-      emit(state.copyWith(error: error));
+  Future<void> _onSubscribeToForegroundMessages(
+    _SubscribeToForegroundMessages event,
+    Emitter<NotificationsState> emit,
+  ) async {
+    await emit.forEach<RemoteMessage>(
+      _pushNotifications.onForegroundMessage,
+      onData: _onNewMessage,
+      onError: _onMessageError,
+    );
+  }
+
+  NotificationsState _onMessageError(Object error, StackTrace stackTrace) {
       addError(error, stackTrace);
+      return state.copyWith(error: error);
     }
+
+  NotificationsState _onNewMessage(RemoteMessage message) {
+      final notification = AppNotification.fromRemoteMessage(message);
+      return state.copyWith(
+        notifications: state.notifications + [notification],
+      );
+    }
+
+  Future<void> _onSubscribeToBackgroundMessages(
+    _SubscribeToBackgroundMessages event,
+    Emitter<NotificationsState> emit,
+  ) async {
+    await emit.forEach<RemoteMessage>(
+      _pushNotifications.onBackgroundMessage,
+      onData: _onNewMessage,
+      onError: _onMessageError,
+    );
   }
 
   Future<void> _onPermissionRequested(
@@ -118,43 +151,5 @@ class NotificationsBloc extends Bloc<NotificationsEvent, NotificationsState> {
       );
       addError(error, stackTrace);
     }
-  }
-
-  Future<void> _setupNotificationStreams() async {
-    try {
-      await _foregroundSubscription?.cancel();
-      await _backgroundSubscription?.cancel();
-      await _initialMessageSubscription?.cancel();
-
-      _foregroundSubscription = _pushNotifications.onForegroundMessage.listen(
-        (message) => add(NotificationReceived(message)),
-        onError: addError,
-      );
-
-      _backgroundSubscription = _pushNotifications.onBackgroundMessage.listen(
-        (message) => add(NotificationReceived(message)),
-        onError: addError,
-      );
-
-      _initialMessageSubscription = _pushNotifications.onInitialMessage.listen(
-        (message) {
-          if (message != null) {
-            add(NotificationReceived(message));
-          }
-        },
-        onError: addError,
-      );
-    } catch (error, stackTrace) {
-      addError(error, stackTrace);
-      rethrow;
-    }
-  }
-
-  @override
-  Future<void> close() async {
-    await _foregroundSubscription?.cancel();
-    await _backgroundSubscription?.cancel();
-    await _initialMessageSubscription?.cancel();
-    return super.close();
   }
 }

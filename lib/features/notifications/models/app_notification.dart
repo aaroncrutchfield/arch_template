@@ -1,4 +1,5 @@
 import 'package:equatable/equatable.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 
 /// {@template app_notification}
 /// Model representing a notification in the app
@@ -11,6 +12,16 @@ class AppNotification extends Equatable {
     required this.body,
     this.payload,
   });
+
+  /// {@macro app_notification_from_remote_message}
+  factory AppNotification.fromRemoteMessage(RemoteMessage message) {
+    return AppNotification(
+      id: message.messageId ?? '',
+      title: message.notification?.title ?? '',
+      body: message.notification?.body ?? '',
+      payload: message.data,
+    );
+  }
 
   /// Unique identifier for the notification
   final String id;
