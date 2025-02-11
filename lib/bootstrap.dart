@@ -3,8 +3,10 @@ import 'dart:developer';
 
 import 'package:arch_template/app/environments.dart';
 import 'package:arch_template/core/di/app_registry.dart';
+import 'package:arch_template/core/notifications/handlers/background_handler.dart';
 import 'package:bloc/bloc.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_web_plugins/url_strategy.dart';
 
@@ -57,6 +59,7 @@ Future<void> bootstrap({
   Bloc.observer = const AppBlocObserver();
 
   // Add cross-flavor configuration here
+  FirebaseMessaging.onBackgroundMessage(devFirebaseMessagingBackgroundHandler);
 
   runApp(await builder());
 }
