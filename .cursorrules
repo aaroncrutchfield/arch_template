@@ -1,5 +1,15 @@
 # Flutter Development Guidelines
 
+## Linting
+- Constructor declarations should be before non-constructor declarations.
+
+## Dart Documentation
+- Use dartdoc for documentation
+- Document all public APIs
+- Use consistent format: Feature: Description
+- Start each with action verb
+
+
 ## Core Principles
 
 - Follow SOLID principles
@@ -58,7 +68,7 @@ packages/
 ### Repository Pattern
 - Implement interface for each repository
 - Provide default factory constructor in interface
-- Don't expose third-party dependencies
+- Dont expose third-party dependencies
 - Use custom errors with documentation
 - Handle caching and error handling
 - Keep repositories independent of bloc
@@ -85,11 +95,15 @@ packages/
   - Never use freezed
   - Keep immutable
   - Implement Equatable
+  - Use const constructors when possible
+  - Create copyWith methods when needed
+  - Create in a separate file from the bloc
 - Events
   - Use sealed classes
   - Never use freezed
   - Include required data
   - Keep events focused
+  - Create in a separate file from the bloc
 
 ### Error Handling
 - Catch exceptions in bloc
@@ -160,3 +174,83 @@ packages/
 - Keep translations in arb files
 - No hardcoded strings in widgets
 - Use flutter gen-l10n to generate l10n
+
+# Imports
+- Use package imports
+- Prefer barrel imports
+- Avoid relative imports
+- Verify import paths resolve correctly
+
+# Epic Template Rules
+
+[epic_title]
+# Epic: {Active Verb} + {System/Feature} + {Main Objective}
+Example: "Epic: Implement Advanced User Authentication System"
+
+[business_value]
+## Business Value
+{1-2 sentences describing direct business impact}
+- Start with action-oriented outcome
+- Focus on measurable benefits
+- Link to business objectives
+
+[description]
+## Description
+{2-3 sentences explaining what will be built}
+- Keep technical details minimal
+- Focus on solution overview
+- Highlight main components
+
+[key_features]
+## Key Features
+- {Feature 1}: {Brief description}
+- {Feature 2}: {Brief description}
+- {Feature 3}: {Brief description}
+* List 4-6 core features
+* Use consistent format: Feature: Description
+* Start each with action verb
+
+[benefits]
+## Benefits
+- {Benefit 1}
+- {Benefit 2}
+- {Benefit 3}
+* List 4-6 key benefits
+* Start with measurable outcomes
+* Link to business metrics
+
+[technical_considerations]
+## Technical Considerations
+- {Consideration 1}
+- {Consideration 2}
+- {Consideration 3}
+* Focus on high-level technical requirements
+* Include integration points
+* Note architectural impacts
+
+[success_metrics]
+## Success Metrics
+- {Metric 1}
+- {Metric 2}
+- {Metric 3}
+* Use measurable outcomes
+* Include before/after metrics
+* Link to KPIs
+
+[dependencies]
+## Dependencies
+- {Dependency 1}
+- {Dependency 2}
+- {Dependency 3}
+* List systems, teams, or resources needed
+* Include timeline dependencies
+* Note external requirements
+
+[risk_factors]
+## Risk Factors
+- {Risk 1}
+- {Risk 2}
+- {Risk 3}
+* Include mitigation strategies
+* Rate impact/probability
+* List assumptions

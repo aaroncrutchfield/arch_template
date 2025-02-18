@@ -1,6 +1,7 @@
 // coverage:ignore-file
 import 'package:arch_template/core/di/data/injectable/annotations.dart';
 import 'package:arch_template/firebase/firebase_options_dev.dart' as dev;
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -51,4 +52,8 @@ abstract class FirebaseModule {
   @singleton
   FirebaseCrashlytics getFirebaseCrashlytics(FirebaseApp app) =>
       FirebaseCrashlytics.instance;
+
+  @singleton
+  FirebaseFirestore getFirebaseFirestore(FirebaseApp app) =>
+      FirebaseFirestore.instanceFor(app: app);
 }

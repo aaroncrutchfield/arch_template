@@ -46,3 +46,11 @@ class SignOutException extends AuthException {
   /// {@macro sign_out_exception}
   const SignOutException(super.error, super.stackTrace);
 }
+
+/// {@template user_not_signed_in_exception}
+/// An exception that occurs when the user is not signed in.
+/// {@endtemplate}
+class UserNotSignedInException extends AuthException {
+  /// {@macro user_not_signed_in_exception}
+  const UserNotSignedInException(super.error, super.stackTrace);
+}

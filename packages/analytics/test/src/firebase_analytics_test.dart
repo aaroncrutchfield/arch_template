@@ -26,7 +26,7 @@ void main() {
         ),
       ).thenAnswer((_) async {});
 
-      await service.trackEvent(name, parameters: parameters);
+      service.trackEvent(name, parameters: parameters);
 
       verify(
         () => mockAnalytics.logEvent(
@@ -69,7 +69,7 @@ void main() {
         () => mockAnalytics.setUserId(id: userId),
       ).thenAnswer((_) async {});
 
-      await service.identifyUser(userId);
+      service.identifyUser(userId);
 
       verify(
         () => mockAnalytics.setUserId(id: userId),

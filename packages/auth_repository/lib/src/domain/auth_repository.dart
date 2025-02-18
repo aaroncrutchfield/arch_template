@@ -20,6 +20,11 @@ abstract interface class AuthRepository {
     );
   }
 
+  /// The current user.
+  ///
+  /// Throws [UserNotSignedInException] if the user is not signed in.
+  AuthUser get currentUser;
+
   /// The state of the authentication.
   Stream<AuthUser?> authStateChanges();
 

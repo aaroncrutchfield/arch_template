@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:analytics/src/analytics.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 
@@ -13,13 +15,15 @@ class FirebaseAnalyticsService implements Analytics {
   final FirebaseAnalytics _analytics;
 
   @override
-  Future<void> trackEvent(
+  void trackEvent(
     String name, {
     Map<String, Object>? parameters,
   }) {
-    return _analytics.logEvent(
-      name: name,
-      parameters: parameters,
+    unawaited(
+      _analytics.logEvent(
+        name: name,
+        parameters: parameters,
+      ),
     );
   }
 
@@ -36,8 +40,8 @@ class FirebaseAnalyticsService implements Analytics {
   }
 
   @override
-  Future<void> identifyUser(String userId) {
-    return _analytics.setUserId(id: userId);
+  void identifyUser(String userId) {
+    unawaited(_analytics.setUserId(id: userId));
   }
 
   @override

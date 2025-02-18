@@ -8,7 +8,7 @@
 # https://cli.vgv.dev/docs/templates/flutter_pkg
 # https://brickhub.dev/bricks/flutter_bloc_feature
 
-.PHONY: app package bloc cubit
+.PHONY: app package bloc cubit test build
 
 app:
 	@scripts/development/create_app.sh
@@ -21,3 +21,9 @@ bloc:
 
 cubit:
 	@scripts/development/create_cubit.sh 
+
+test:
+	@scripts/development/tests.sh
+
+build:
+	dart run build_runner build -d
