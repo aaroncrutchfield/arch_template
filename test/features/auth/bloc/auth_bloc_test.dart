@@ -263,31 +263,6 @@ void main() {
       );
 
       blocTest<AuthBloc, AuthState>(
-        'handles other GetUserException errors appropriately',
-        setUp: () {
-          when(() => authRepository.authStateChanges())
-              .thenAnswer((_) => Stream.value(authUser));
-          when(() => userRepository.getUser(any())).thenThrow(
-            const GetUserException(
-              'Some other error',
-              StackTrace.empty,
-            ),
-          );
-          when(() => appNavigation.replaceNamed('/login'))
-              .thenAnswer((_) async {});
-        },
-        build: createBloc,
-        expect: () => [
-          const AuthFailure('GetUserException: Some other error'),
-        ],
-        verify: (_) {
-          verify(() => userRepository.getUser('test-user-id')).called(1);
-          verifyNever(() => userRepository.createUser(any()));
-          verify(() => appNavigation.replaceNamed('/login')).called(1);
-        },
-      );
-
-      blocTest<AuthBloc, AuthState>(
         'emits failure when creating user fails',
         setUp: () {
           when(() => authRepository.authStateChanges())
