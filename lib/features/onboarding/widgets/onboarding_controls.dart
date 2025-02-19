@@ -6,7 +6,6 @@ class OnboardingControls extends StatelessWidget {
     required this.canSkip,
     required this.isCompleted,
     required this.onSkip,
-    required this.onNext,
     required this.onComplete,
     super.key,
   });
@@ -14,7 +13,6 @@ class OnboardingControls extends StatelessWidget {
   final bool canSkip;
   final bool isCompleted;
   final void Function() onSkip;
-  final void Function() onNext;
   final void Function() onComplete;
 
   @override
@@ -34,18 +32,13 @@ class OnboardingControls extends StatelessWidget {
             )
           else
             const SizedBox.shrink(),
-          ElevatedButton(
-            onPressed: () {
-              if (isCompleted) {
-                onComplete();
-              } else {
-                onNext();
-              }
-            },
-            child: Text(
-              isCompleted ? l10n.getStarted : l10n.next,
-            ),
-          ),
+          if (isCompleted)
+            ElevatedButton(
+              onPressed: onComplete,
+              child: Text(l10n.getStarted),
+            )
+          else
+            const SizedBox.shrink(),
         ],
       ),
     );

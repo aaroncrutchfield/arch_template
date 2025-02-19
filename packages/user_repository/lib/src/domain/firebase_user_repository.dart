@@ -57,10 +57,10 @@ class FirebaseUserRepository implements UserRepository {
           );
 
   @override
-  Future<UserEntity> getUser(String email) async {
+  Future<UserEntity> getUser(String uid) async {
     try {
       final snapshot = await _usersCollection
-          .where('email', isEqualTo: email)
+          .where('uid', isEqualTo: uid)
           .limit(1)
           .get();
 

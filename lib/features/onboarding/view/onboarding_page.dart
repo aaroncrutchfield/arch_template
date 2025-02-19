@@ -39,7 +39,7 @@ class OnboardingView extends StatelessWidget {
       listener: (context, state) async {
         if (state is OnboardingCompleted) {
           if (context.mounted) {
-            context.navigation.replaceNamed('/counter');
+            context.navigation.replaceNamed('/');
           }
         } else if (state is OnboardingError) {
           if (context.mounted) {
@@ -68,9 +68,8 @@ class OnboardingView extends StatelessWidget {
                 ),
                 OnboardingControls(
                   canSkip: config.canSkip,
-                  isCompleted: state.isCompleted,
+                  isCompleted: state.currentPage == config.pages.length - 1,
                   onSkip: () => bloc.add(OnboardingSkipped()),
-                  onNext: () => bloc.add(OnboardingCompleteRequested()),
                   onComplete: () => bloc.add(OnboardingCompleteRequested()),
                 ),
               ],

@@ -1,6 +1,4 @@
-import 'package:arch_template/features/onboarding/bloc/onboarding_bloc.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 
 class OnboardingProgress extends StatelessWidget {
   const OnboardingProgress({
@@ -14,23 +12,19 @@ class OnboardingProgress extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<OnboardingBloc, OnboardingState>(
-      builder: (context, state) {
-        return Positioned(
-          bottom: 100,
-          left: 0,
-          right: 0,
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: List.generate(
-              pageCount,
-              (index) => _ProgressDot(
-                isActive: index == currentPage,
-              ),
-            ),
+    return Positioned(
+      bottom: 100,
+      left: 0,
+      right: 0,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: List.generate(
+          pageCount,
+          (index) => _ProgressDot(
+            isActive: index == currentPage,
           ),
-        );
-      },
+        ),
+      ),
     );
   }
 }
@@ -51,7 +45,7 @@ class _ProgressDot extends StatelessWidget {
       decoration: BoxDecoration(
         shape: BoxShape.circle,
         color: isActive
-            ? Theme.of(context).primaryColor
+            ? Theme.of(context).primaryColorLight
             : Theme.of(context).disabledColor,
       ),
     );

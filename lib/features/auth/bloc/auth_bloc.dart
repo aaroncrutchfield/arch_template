@@ -67,7 +67,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         await _userRepository.createUser(user);
       }
 
-      final route = user.isOnboardComplete ? '/' : '/onboarding';
+      final route = false ? '/' : '/onboarding';
       _appNavigation.replaceNamed(route);
     } catch (e, s) {
       _handleError(e, s, emit);

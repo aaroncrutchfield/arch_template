@@ -20,6 +20,9 @@ class PageContent extends StatelessWidget {
             Image.asset(
               page.imagePath!,
               height: 200,
+              errorBuilder: (context, error, stackTrace) {
+                return const SizedBox.shrink();
+              },
             ),
             const SizedBox(height: 40),
           ],

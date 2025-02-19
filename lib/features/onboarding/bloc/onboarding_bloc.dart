@@ -28,7 +28,7 @@ class OnboardingBloc extends Bloc<OnboardingEvent, OnboardingState> {
     OnboardingPageChanged event,
     Emitter<OnboardingState> emit,
   ) async {
-    if (event.pageIndex == config.pages.length - 1) {
+    if (event.pageIndex == config.pages.length) {
       emit(const OnboardingCompleted());
     } else {
       emit(OnboardingInProgress(currentPage: event.pageIndex));
