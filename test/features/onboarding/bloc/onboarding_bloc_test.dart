@@ -7,8 +7,11 @@ import 'package:mocktail/mocktail.dart';
 import 'package:user_repository/user_repository.dart';
 
 class MockUserRepository extends Mock implements UserRepository {}
+
 class MockAuthRepository extends Mock implements AuthRepository {}
-class MockUser extends Mock implements User {}
+
+class MockUserEntity extends Mock implements UserEntity {}
+
 class MockAuthUser extends Mock implements AuthUser {}
 
 void main() {
@@ -16,19 +19,24 @@ void main() {
   late UserRepository userRepository;
   late AuthRepository authRepository;
   late OnboardingConfig config;
-  late User mockUser;
+  late UserEntity mockUser;
   late AuthUser mockAuthUser;
 
   setUp(() {
     userRepository = MockUserRepository();
     authRepository = MockAuthRepository();
-    mockUser = MockUser();
+    mockUser = MockUserEntity();
     mockAuthUser = MockAuthUser();
 
     // Setup default config with 3 pages
     config = OnboardingConfig(
-      pages: List.generate(3, (index) => OnboardingPage(title: 'Page $index')),
-      canSkip: true,
+      pages: List.generate(
+        3,
+        (index) => OnboardingInfo(
+          title: 'Page $index',
+          description: 'Description $index',
+        ),
+      ),
     );
 
     // Setup default mocks
@@ -132,4 +140,4 @@ void main() {
       ],
     );
   });
-} 
+}

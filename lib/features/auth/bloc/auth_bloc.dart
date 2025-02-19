@@ -61,7 +61,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       UserEntity? user;
       try {
         user = await _userRepository.getUser(authUser.id);
-      } on GetUserException catch (e) {
+      } on GetUserException {
         // TODO(acrutchfield): Handle this error more gracefully
         user = authUser.toUserEntity();
         await _userRepository.createUser(user);

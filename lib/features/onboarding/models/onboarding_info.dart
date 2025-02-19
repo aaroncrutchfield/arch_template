@@ -26,4 +26,13 @@ class OnboardingConfig {
   final bool canSkip;
   final Duration transitionDuration;
   final Curve transitionCurve;
+
+  OnboardingConfig copyWith({
+    bool? canSkip,
+    Duration? transitionDuration,
+    Curve? transitionCurve,
+  }) {
+    return OnboardingConfig(pages: pages, canSkip: canSkip ?? this.canSkip, transitionDuration: transitionDuration ?? this.transitionDuration, transitionCurve: transitionCurve ?? this.transitionCurve,
+    );
+  }
 }

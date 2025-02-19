@@ -23,6 +23,7 @@ jobs:
       flutter_channel: stable
       package_get_excludes: |
         __brick__
+      min_coverage: 10
 
   spell-check:
     uses: VeryGoodOpenSource/very_good_workflows/.github/workflows/spell_check.yml@v1
