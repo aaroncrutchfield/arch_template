@@ -20,19 +20,6 @@ import 'package:arch_template/core/navigation/domain/app_navigation.dart'
 import 'package:arch_template/core/navigation/domain/auto_route_navigation.dart'
     as _i800;
 import 'package:arch_template/core/navigation/navigation.dart' as _i423;
-import 'package:arch_template/core/notifications/handlers/notification_handlers.dart'
-    as _i528;
-import 'package:arch_template/core/notifications/local/flutter_local_notifications.dart'
-    as _i176;
-import 'package:arch_template/core/notifications/local/local_notifications.dart'
-    as _i794;
-import 'package:arch_template/core/notifications/push/firebase_messaging_wrapper.dart'
-    as _i283;
-import 'package:arch_template/core/notifications/push/firebase_push_notifications.dart'
-    as _i362;
-import 'package:arch_template/core/notifications/push/push_notifications.dart'
-    as _i371;
-import 'package:arch_template/core/platform/capability.dart' as _i717;
 import 'package:arch_template/features/auth/bloc/auth_bloc.dart' as _i474;
 import 'package:arch_template/features/login/bloc/login_bloc.dart' as _i21;
 import 'package:arch_template/features/notifications/bloc/notifications_bloc.dart'
@@ -52,6 +39,7 @@ import 'package:flutter_local_notifications/flutter_local_notifications.dart'
     as _i163;
 import 'package:get_it/get_it.dart' as _i174;
 import 'package:injectable/injectable.dart' as _i526;
+import 'package:notifications/notifications.dart' as _i327;
 import 'package:user_repository/user_repository.dart' as _i164;
 
 const String _staging = 'staging';
@@ -74,7 +62,6 @@ extension GetItInjectableX on _i174.GetIt {
     final firebaseModule = _$FirebaseModule();
     final packagesModule = _$PackagesModule();
     gh.factory<_i974.OnboardingConfig>(() => onboardingModule.onboardingConfig);
-    gh.singleton<_i717.Capability>(() => _i717.Capability());
     gh.singleton<_i163.FlutterLocalNotificationsPlugin>(
         () => librariesModule.getFlutterLocalNotificationsPlugin());
     gh.singleton<_i17.RootAutoRouter>(() => _i17.RootAutoRouter());
@@ -84,11 +71,6 @@ extension GetItInjectableX on _i174.GetIt {
       () => firebaseModule.getStagingOptions(),
       registerFor: {_staging},
     );
-    gh.factory<_i794.LocalNotifications>(() =>
-        _i176.FlutterLocalNotificationsService(
-            gh<_i163.FlutterLocalNotificationsPlugin>()));
-    gh.factory<_i528.NotificationHandlers>(
-        () => _i528.NotificationHandlers(gh<_i794.LocalNotifications>()));
     gh.singleton<_i982.FirebaseOptions>(
       () => firebaseModule.getDevOptions(),
       registerFor: {_development},
@@ -106,6 +88,8 @@ extension GetItInjectableX on _i174.GetIt {
       },
       preResolve: true,
     );
+    gh.singleton<_i327.PushNotifications>(
+        () => packagesModule.getPushNotifications(gh<_i982.FirebaseApp>()));
     gh.singleton<_i59.FirebaseAuth>(
         () => firebaseModule.getFirebaseAuth(gh<_i982.FirebaseApp>()));
     gh.singleton<_i398.FirebaseAnalytics>(
@@ -122,17 +106,10 @@ extension GetItInjectableX on _i174.GetIt {
         () => packagesModule.getAnalytics(gh<_i398.FirebaseAnalytics>()));
     gh.singleton<_i398.FirebaseAnalyticsObserver>(() => firebaseModule
         .getFirebaseAnalyticsObserver(gh<_i398.FirebaseAnalytics>()));
-    gh.factory<_i283.FirebaseMessagingWrapper>(
-        () => _i283.FirebaseMessagingWrapper(gh<_i892.FirebaseMessaging>()));
-    gh.factory<_i371.PushNotifications>(() => _i362.FirebasePushNotifications(
-          gh<_i283.FirebaseMessagingWrapper>(),
-          gh<_i141.FirebaseCrashlytics>(),
-          gh<_i717.Capability>(),
-        ));
+    gh.factory<_i831.NotificationsBloc>(
+        () => _i831.NotificationsBloc(gh<_i327.PushNotifications>()));
     gh.singleton<_i1026.AuthRepository>(
         () => packagesModule.getAuthRepository(gh<_i59.FirebaseAuth>()));
-    gh.factory<_i831.NotificationsBloc>(
-        () => _i831.NotificationsBloc(gh<_i371.PushNotifications>()));
     gh.factory<_i474.AuthBloc>(() => _i474.AuthBloc(
           gh<_i1026.AuthRepository>(),
           gh<_i164.UserRepository>(),

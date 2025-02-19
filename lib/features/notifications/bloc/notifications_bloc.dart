@@ -1,11 +1,11 @@
 import 'dart:async';
 
-import 'package:arch_template/core/notifications/push/push_notifications.dart';
 import 'package:arch_template/features/notifications/models/app_notification.dart';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:injectable/injectable.dart';
+import 'package:notifications/notifications.dart';
 
 part 'notifications_event.dart';
 part 'notifications_state.dart';

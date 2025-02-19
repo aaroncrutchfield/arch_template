@@ -1,10 +1,8 @@
 import 'package:firebase_messaging/firebase_messaging.dart';
-import 'package:injectable/injectable.dart';
 
 /// {@template firebase_messaging_client}
 /// A wrapper around [FirebaseMessaging] to make it more testable
 /// {@endtemplate}
-@injectable
 class FirebaseMessagingWrapper {
   /// {@macro firebase_messaging_client}
   const FirebaseMessagingWrapper(this._messaging);

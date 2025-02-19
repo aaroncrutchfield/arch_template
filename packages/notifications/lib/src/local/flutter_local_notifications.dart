@@ -1,14 +1,12 @@
 import 'dart:async';
 
-import 'package:arch_template/core/notifications/local/local_notifications.dart';
-import 'package:arch_template/core/notifications/local/notification_channels.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
-import 'package:injectable/injectable.dart';
+import 'package:notifications/src/local/local_notifications.dart';
+import 'package:notifications/src/local/notification_channels.dart';
 
 /// Flutter implementation of [LocalNotifications]
-@Injectable(as: LocalNotifications)
 class FlutterLocalNotificationsService implements LocalNotifications {
   /// {@macro flutter_local_notifications_service}
   FlutterLocalNotificationsService(this._localNotifications);

@@ -1,10 +1,10 @@
 import 'dart:async';
 
-import 'package:arch_template/core/notifications/local/flutter_local_notifications.dart';
-import 'package:arch_template/core/notifications/local/notification_channels.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
+import 'package:notifications/src/local/flutter_local_notifications.dart';
+import 'package:notifications/src/local/notification_channels.dart';
 
 class MockFlutterLocalNotificationsPlugin extends Mock
     implements FlutterLocalNotificationsPlugin {}

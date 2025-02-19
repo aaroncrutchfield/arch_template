@@ -1,7 +1,14 @@
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:notifications/src/local/flutter_local_notifications.dart';
 
 /// Interface for handling local notifications
 abstract interface class LocalNotifications {
+  factory LocalNotifications() {
+    return FlutterLocalNotificationsService(
+      FlutterLocalNotificationsPlugin(),
+    );
+  }
+
   /// Initialize the local notifications service
   Future<void> initialize();
 

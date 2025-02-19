@@ -1,7 +1,20 @@
+import 'package:capabilites/capabilites.dart';
+import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:notifications/src/push/firebase_messaging_wrapper.dart';
+import 'package:notifications/src/push/firebase_push_notifications.dart';
 
 /// Interface for push notification services
 abstract interface class PushNotifications {
+  /// {@macro push_notifications}
+  factory PushNotifications() {
+    return FirebasePushNotifications(
+      FirebaseMessagingWrapper(FirebaseMessaging.instance),
+      FirebaseCrashlytics.instance,
+      const Capabilites(),
+    );
+  }
+
   /// Stream of messages received when the app is in the foreground
   Stream<RemoteMessage> get onForegroundMessage;
 
