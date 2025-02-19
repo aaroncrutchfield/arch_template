@@ -1,10 +1,11 @@
-import 'package:arch_template/core/notifications/push/firebase_messaging_wrapper.dart';
-import 'package:arch_template/core/notifications/push/firebase_push_notifications.dart';
-import 'package:arch_template/core/platform/capability.dart';
+import 'package:capabilites/capabilites.dart';
+
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
+import 'package:notifications/src/push/firebase_messaging_wrapper.dart';
+import 'package:notifications/src/push/firebase_push_notifications.dart';
 
 class MockFirebaseMessagingWrapper extends Mock
     implements FirebaseMessagingWrapper {}
@@ -15,19 +16,19 @@ class MockRemoteMessage extends Mock implements RemoteMessage {}
 
 class MockNotificationSettings extends Mock implements NotificationSettings {}
 
-class MockCapability extends Mock implements Capability {}
+class MockCapabilities extends Mock implements Capabilites {}
 
 void main() {
   late FirebasePushNotifications pushNotifications;
   late MockFirebaseMessagingWrapper messaging;
   late MockFirebaseCrashlytics crashlytics;
   late MockNotificationSettings settings;
-  late MockCapability capability;
+  late MockCapabilities capability;
   setUp(() {
     messaging = MockFirebaseMessagingWrapper();
     crashlytics = MockFirebaseCrashlytics();
     settings = MockNotificationSettings();
-    capability = MockCapability();
+    capability = MockCapabilities();
     pushNotifications =
         FirebasePushNotifications(messaging, crashlytics, capability);
   });

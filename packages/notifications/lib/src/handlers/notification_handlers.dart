@@ -1,11 +1,9 @@
-import 'package:arch_template/core/notifications/local/local_notifications.dart';
-import 'package:arch_template/core/notifications/local/notification_channels.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
-import 'package:injectable/injectable.dart';
+import 'package:notifications/src/local/local_notifications.dart';
+import 'package:notifications/src/local/notification_channels.dart';
 
 /// Handles notification-related events
-@injectable
 class NotificationHandlers {
   /// {@macro notification_handlers}
   const NotificationHandlers(this._localNotifications);

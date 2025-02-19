@@ -34,6 +34,8 @@ dependencies:
   injectable: ^2.5.0
   injectable_generator: ^2.6.2
   intl: ^0.19.0
+  notifications:
+    path: packages/notifications
   upgrader: ^11.3.1
   user_repository:
     path: packages/user_repository

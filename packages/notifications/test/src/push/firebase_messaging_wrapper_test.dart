@@ -1,7 +1,7 @@
-import 'package:arch_template/core/notifications/push/firebase_messaging_wrapper.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
+import 'package:notifications/src/push/firebase_messaging_wrapper.dart';
 
 class MockFirebaseMessaging extends Mock implements FirebaseMessaging {}
 

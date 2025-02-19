@@ -1,8 +1,9 @@
-import 'package:arch_template/core/notifications/handlers/notification_handlers.dart';
-import 'package:arch_template/core/notifications/local/flutter_local_notifications.dart';
+
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
+import 'package:notifications/src/handlers/notification_handlers.dart';
+import 'package:notifications/src/local/flutter_local_notifications.dart';
 
 class MockFlutterLocalNotificationsService extends Mock
     implements FlutterLocalNotificationsService {}

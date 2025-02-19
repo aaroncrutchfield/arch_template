@@ -1,26 +1,24 @@
 import 'dart:async';
 
-import 'package:arch_template/core/notifications/push/firebase_messaging_wrapper.dart';
-import 'package:arch_template/core/notifications/push/push_notifications.dart';
-import 'package:arch_template/core/platform/capability.dart';
+import 'package:capabilites/capabilites.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/foundation.dart';
-import 'package:injectable/injectable.dart';
+import 'package:notifications/src/push/firebase_messaging_wrapper.dart';
+import 'package:notifications/src/push/push_notifications.dart';
 
 /// Firebase implementation of [PushNotifications]
-@Injectable(as: PushNotifications)
 class FirebasePushNotifications implements PushNotifications {
   /// {@macro firebase_push_notifications}
   FirebasePushNotifications(
     this._messagingClient,
     this._crashlytics,
-    this._capability,
+    this._capabilities,
   );
 
   final FirebaseMessagingWrapper _messagingClient;
   final FirebaseCrashlytics _crashlytics;
-  final Capability _capability;
+  final Capabilites _capabilities;
   void _reportError(Object error, StackTrace stackTrace) {
     unawaited(_crashlytics.recordError(error, stackTrace));
   }
@@ -62,7 +60,7 @@ class FirebasePushNotifications implements PushNotifications {
   Future<String?> getToken() async {
     try {
       // For apple platforms, ensure the APNS token is available
-      if (_capability.requireApnsToken()) {
+      if (_capabilities.requireApnsToken()) {
         final apnsToken = await _messagingClient.getAPNSToken();
         if (apnsToken == null) {
           debugPrint('APNS token not available yet');
