@@ -1,6 +1,8 @@
-# melos_managed_dependency_overrides: analytics,auth_repository
+# melos_managed_dependency_overrides: analytics,auth_repository,user_repository
 dependency_overrides:
   analytics:
     path: packages/analytics
   auth_repository:
     path: packages/auth_repository
+  user_repository:
+    path: packages/user_repository

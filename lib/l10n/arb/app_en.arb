@@ -35,5 +35,17 @@
     "settings": "Settings",
     "@settings": {
         "description": "Text shown in the Settings Page"
+    },
+    "skip": "Skip",
+    "@skip": {
+        "description": "Text shown when the user wants to skip the onboarding"
+    },
+    "next": "Next",
+    "@next": {
+        "description": "Text shown when the user wants to go to the next page"
+    },
+    "getStarted": "Get Started",
+    "@getStarted": {
+        "description": "Text shown when the user wants to get started"
     }
 }

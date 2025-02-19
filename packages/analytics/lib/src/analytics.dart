@@ -11,13 +11,13 @@ abstract class Analytics {
       FirebaseAnalyticsService(analytics);
 
   /// Tracks a named event with optional parameters
-  Future<void> trackEvent(String name, {Map<String, Object>? parameters});
+  void trackEvent(String name, {Map<String, Object>? parameters});
 
   /// Sets user properties
   Future<void> setUserProperties(Map<String, dynamic> properties);
 
   /// Identifies the current user
-  Future<void> identifyUser(String userId);
+  void identifyUser(String userId);
 
   /// Starts tracking a screen view
   Future<void> trackScreenView(

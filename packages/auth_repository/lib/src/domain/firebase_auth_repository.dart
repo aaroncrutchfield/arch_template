@@ -25,6 +25,15 @@ class FirebaseAuthRepository implements AuthRepository {
   final PlatformHelper _platformHelper;
 
   @override
+  AuthUser get currentUser {
+    final user = _firebaseAuth.currentUser;
+    if (user == null) {
+      throw UserNotSignedInException('User not signed in', StackTrace.current);
+    }
+    return AuthUser.fromFirebaseUser(user);
+  }
+
+  @override
   Stream<AuthUser?> authStateChanges() {
     return _firebaseAuth.authStateChanges().map(
           (user) => user != null ? AuthUser.fromFirebaseUser(user) : null,

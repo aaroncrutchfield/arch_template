@@ -1,6 +1,6 @@
 // coverage:ignore-file
 
-import 'package:arch_template/core/navigation/data/auto_router.gr.dart';
+import 'package:arch_template/core/navigation/auto_router/auto_router.gr.dart';
 import 'package:arch_template/features/shell/widgets/widgets.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';

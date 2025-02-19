@@ -1,4 +1,4 @@
-import 'package:arch_template/core/navigation/data/auto_router.gr.dart';
+import 'package:arch_template/core/navigation/auto_router/auto_router.gr.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:injectable/injectable.dart';
 
@@ -24,6 +24,7 @@ class RootAutoRouter extends RootStackRouter {
   @override
   List<AutoRoute> get routes => [
         AutoRoute(path: '/login', page: LoginRoute.page),
+        AutoRoute(path: '/onboarding', page: OnboardingRoute.page),
         AutoRoute(
           initial: true,
           path: '/',
