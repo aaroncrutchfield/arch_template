@@ -59,10 +59,8 @@ class FirebaseUserRepository implements UserRepository {
   @override
   Future<UserEntity> getUser(String uid) async {
     try {
-      final snapshot = await _usersCollection
-          .where('uid', isEqualTo: uid)
-          .limit(1)
-          .get();
+      final snapshot =
+          await _usersCollection.where('uid', isEqualTo: uid).limit(1).get();
 
       if (snapshot.docs.isEmpty) {
         throw GetUserException('User not found', StackTrace.current);

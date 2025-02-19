@@ -120,7 +120,7 @@ void main() {
         );
       },
       act: (bloc) => bloc.add(OnboardingSkipped()),
-      expect: () => [],
+      expect: () => <OnboardingState>[],
       verify: (_) {
         verifyNever(() => userRepository.updateUser(any()));
       },

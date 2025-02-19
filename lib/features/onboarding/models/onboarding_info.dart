@@ -32,7 +32,11 @@ class OnboardingConfig {
     Duration? transitionDuration,
     Curve? transitionCurve,
   }) {
-    return OnboardingConfig(pages: pages, canSkip: canSkip ?? this.canSkip, transitionDuration: transitionDuration ?? this.transitionDuration, transitionCurve: transitionCurve ?? this.transitionCurve,
+    return OnboardingConfig(
+      pages: pages,
+      canSkip: canSkip ?? this.canSkip,
+      transitionDuration: transitionDuration ?? this.transitionDuration,
+      transitionCurve: transitionCurve ?? this.transitionCurve,
     );
   }
 }
