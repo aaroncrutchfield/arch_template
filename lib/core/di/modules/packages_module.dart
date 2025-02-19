@@ -22,6 +22,5 @@ abstract class PackagesModule {
       UserRepository(firestore);
 
   @singleton
-  PushNotifications getPushNotifications(FirebaseApp app) =>
-      PushNotifications();
+  PushNotifications getPushNotifications(FirebaseApp app) => PushNotifications();
 }
