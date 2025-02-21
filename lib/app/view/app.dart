@@ -4,6 +4,7 @@ import 'package:arch_template/core/di/app_registry.dart';
 import 'package:arch_template/core/navigation/navigation.dart';
 import 'package:arch_template/features/auth/bloc/auth_bloc.dart';
 import 'package:arch_template/features/notifications/bloc/notifications_bloc.dart';
+import 'package:arch_template/features/theme/bloc/theme_bloc.dart';
 import 'package:arch_template/l10n/l10n.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
@@ -28,6 +29,7 @@ class App extends StatelessWidget {
         providers: [
           BlocProvider.value(value: appRegistry.get<AuthBloc>()),
           BlocProvider.value(value: appRegistry.get<NotificationsBloc>()),
+          BlocProvider.value(value: appRegistry.get<ThemeBloc>()),
         ],
         child: const AppView(),
       ),
@@ -42,27 +44,32 @@ class AppView extends StatelessWidget {
   Widget build(BuildContext context) {
     final navigation = context.read<AppNavigation>();
     final analyticsObserver = context.read<FirebaseAnalyticsObserver>();
-    final colorScheme = ColorScheme.fromSeed(
-      brightness: MediaQuery.platformBrightnessOf(context),
-      seedColor: Colors.orange,
-    );
 
-    return MaterialApp.router(
-      routerConfig: navigation.routerConfig([analyticsObserver]),
-      theme: ThemeData(
-        colorScheme: colorScheme,
-        useMaterial3: true,
-      ),
-      localizationsDelegates: AppLocalizations.localizationsDelegates,
-      supportedLocales: AppLocalizations.supportedLocales,
-      builder: (context, child) => UpgradeAlert(
-        dialogStyle: Platform.isIOS
-            ? UpgradeDialogStyle.cupertino
-            : UpgradeDialogStyle.material,
-        navigatorKey: navigation.navigatorKey,
-        upgrader: Upgrader(),
-        child: child,
-      ),
+    return BlocBuilder<ThemeBloc, ThemeState>(
+      builder: (context, state) {
+        final isDark = (state is ThemeLoaded) && state.isDarkMode;
+
+        return MaterialApp.router(
+          routerConfig: navigation.routerConfig([analyticsObserver]),
+          theme: ThemeData(
+            colorScheme: ColorScheme.fromSeed(
+              brightness: isDark ? Brightness.dark : Brightness.light,
+              seedColor: Colors.orange,
+            ),
+            useMaterial3: true,
+          ),
+          localizationsDelegates: AppLocalizations.localizationsDelegates,
+          supportedLocales: AppLocalizations.supportedLocales,
+          builder: (context, child) => UpgradeAlert(
+            dialogStyle: Platform.isIOS
+                ? UpgradeDialogStyle.cupertino
+                : UpgradeDialogStyle.material,
+            navigatorKey: navigation.navigatorKey,
+            upgrader: Upgrader(),
+            child: child,
+          ),
+        );
+      },
     );
   }
 }

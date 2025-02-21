@@ -1,4 +1,5 @@
 import 'package:arch_template/features/profile/models/user.dart';
+import 'package:arch_template/features/profile/widgets/theme_toggle.dart';
 import 'package:arch_template/l10n/l10n.dart';
 import 'package:flutter/material.dart';
 
@@ -58,6 +59,7 @@ class LoadedProfileView extends StatelessWidget {
           title: Text(l10n.settings),
           onTap: onSettings,
         ),
+        const ThemeToggle(),
       ],
     );
   }
