@@ -47,5 +47,9 @@
     "getStarted": "Get Started",
     "@getStarted": {
         "description": "Text shown when the user wants to get started"
+    },
+    "darkMode": "Dark Mode",
+    "@darkMode": {
+        "description": "Text shown when the user wants to toggle dark mode"
     }
 }

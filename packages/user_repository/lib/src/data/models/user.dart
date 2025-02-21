@@ -10,6 +10,7 @@ class UserEntity extends Equatable {
     required this.username,
     required this.email,
     required this.isOnboardComplete,
+    this.isDarkMode = false,
   });
 
   /// The unique identifier of the user
@@ -24,27 +25,33 @@ class UserEntity extends Equatable {
   /// Whether the user has completed onboarding
   final bool isOnboardComplete;
 
+  /// Whether the user prefers dark mode
+  final bool isDarkMode;
+
   /// Creates a copy of this user with the given fields replaced
   UserEntity copyWith({
     String? uid,
     String? username,
     String? email,
     bool? isOnboardComplete,
+    bool? isDarkMode,
   }) {
     return UserEntity(
       uid: uid ?? this.uid,
       username: username ?? this.username,
       email: email ?? this.email,
       isOnboardComplete: isOnboardComplete ?? this.isOnboardComplete,
+      isDarkMode: isDarkMode ?? this.isDarkMode,
     );
   }
 
   @override
-  List<Object?> get props => [uid, username, email, isOnboardComplete];
+  List<Object?> get props =>
+      [uid, username, email, isOnboardComplete, isDarkMode];
 
   @override
   String toString() {
     return 'UserEntity(uid: $uid, username: $username, email: $email, '
-        'isOnboardComplete: $isOnboardComplete)';
+        'isOnboardComplete: $isOnboardComplete, isDarkMode: $isDarkMode)';
   }
 }

@@ -28,6 +28,7 @@ import 'package:arch_template/features/onboarding/bloc/onboarding_bloc.dart'
     as _i359;
 import 'package:arch_template/features/onboarding/models/models.dart' as _i974;
 import 'package:arch_template/features/profile/bloc/profile_bloc.dart' as _i206;
+import 'package:arch_template/features/theme/bloc/theme_bloc.dart' as _i341;
 import 'package:auth_repository/auth_repository.dart' as _i1026;
 import 'package:cloud_firestore/cloud_firestore.dart' as _i974;
 import 'package:firebase_analytics/firebase_analytics.dart' as _i398;
@@ -125,6 +126,10 @@ extension GetItInjectableX on _i174.GetIt {
         () => _i206.ProfileBloc(gh<_i1026.AuthRepository>()));
     gh.factory<_i21.LoginBloc>(
         () => _i21.LoginBloc(gh<_i1026.AuthRepository>()));
+    gh.factory<_i341.ThemeBloc>(() => _i341.ThemeBloc(
+          gh<_i164.UserRepository>(),
+          gh<_i1026.AuthRepository>(),
+        ));
     return this;
   }
 }

@@ -11,6 +11,7 @@ extension UserEntityFirebaseX on UserEntity {
       'username': username,
       'email': email,
       'isOnboardComplete': isOnboardComplete,
+      'isDarkMode': isDarkMode,
     };
   }
 }
@@ -28,6 +29,7 @@ extension UserEntityFirebaseConverter on UserEntity {
       username: data['username'] as String,
       email: data['email'] as String,
       isOnboardComplete: data['isOnboardComplete'] as bool,
+      isDarkMode: data['isDarkMode'] as bool,
     );
   }
 
@@ -83,10 +85,10 @@ class FirebaseUserRepository implements UserRepository {
   }
 
   @override
-  Stream<UserEntity?> userChanges(String email) {
+  Stream<UserEntity?> userChanges(String uid) {
     try {
       return _usersCollection
-          .where('email', isEqualTo: email)
+          .where('uid', isEqualTo: uid)
           .limit(1)
           .snapshots()
           .map((snapshot) {
